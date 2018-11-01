@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">ProductDesignMobile</string>
+
+    <string name="menuHome">Home</string>
+    <string name="menuProfileSettings">Profile Settings</string>
+    <string name="menuDisplaySettings">Display Settings</string>
+    <string name="menuLogout">Logout</string>
+
+    <string name="profileSettingsHeader">Profile Settings</string>
+
+    <string name="profileFirstName">First Name</string>
+    <string name="profileLastName">Last Name</string>
+    <string name="profileEmail">Email</string>
+    <string name="profileGender">Gender</string>
+    <string name="profileLanguage">Language</string>
+
+    <string name="profileDietaryGlutenFree">Gluten Free</string>
+    <string name="profileDietaryVegan">Vegan</string>
+    <string name="profileDietaryMilkless">Milkless</string>
+    <string name="profileDietaryLactoseFree">Lactose Free</string>
+    <string name="profileDietaryLowLactose">Low Lactose</string>
+    <string name="profileDietarySaveButton">Save dietary settings</string>
+
+    <string name="displayShowCalendar">Show Calendar</string>
+    <string name="displayShowFoodMenu">Show Food Menu</string>
+
+    <string name="pictureSaveButton">Save Changes</string>
+
+    <string name="homeGuide">Hello</string>
+
+    <string-array name="gender_array">
+        <item>Female</item>
+        <item>Male</item>
+    </string-array>
+
+    <string-array name="language_array">
+        <item>English</item>
+        <item>Finnish</item>
+    </string-array>
+</resources>

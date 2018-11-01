@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textViewDisplayHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:text="Dietary Settings" />
+
+    <CheckBox
+        android:id="@+id/checkBoxGlutenFree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/profileDietaryGlutenFree" />
+
+    <CheckBox
+        android:id="@+id/checkBoxLactoseFree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/profileDietaryLactoseFree" />
+
+    <CheckBox
+        android:id="@+id/checkBoxLowLactose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/profileDietaryLowLactose" />
+
+    <CheckBox
+        android:id="@+id/checkBoxMilkless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/profileDietaryMilkless" />
+
+    <CheckBox
+        android:id="@+id/checkBoxVegan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/profileDietaryVegan" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:gravity="center_horizontal|bottom"
+        android:layout_weight="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="vertical" >
+        <Button
+            android:id="@+id/buttonSaveDietary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/profileDietarySaveButton" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

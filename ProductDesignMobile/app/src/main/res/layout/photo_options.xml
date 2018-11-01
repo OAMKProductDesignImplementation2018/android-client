@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textViewDisplayHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:text="Photo Settings" />
+
+    <ImageView
+        android:id="@+id/imageViewProfilePicture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/nophoto"/>
+
+    <Button
+        android:id="@+id/buttonAddPictureFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add profile image from files" />
+
+    <Button
+        android:id="@+id/buttonAddPhotoCamera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Use camera to take profile image" />
+
+    <Button
+        android:id="@+id/buttonRemovePicture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remove Profile Picture" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:gravity="center_horizontal|bottom"
+        android:layout_weight="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="vertical" >
+        <Button
+            android:id="@+id/buttonSavePicture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/pictureSaveButton" />
+    </LinearLayout>
+</LinearLayout>

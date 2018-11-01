@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textViewDisplayHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:text="@string/menuDisplaySettings" />
+
+    <CheckBox
+        android:id="@+id/checkBoxCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/displayShowCalendar" />
+
+    <CheckBox
+        android:id="@+id/checkBoxFoodMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/displayShowFoodMenu" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:gravity="center_horizontal|bottom"
+        android:layout_weight="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="vertical" >
+        <Button
+            android:id="@+id/buttonUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Display Settings" />
+
+        <Button
+            android:id="@+id/buttonDiscard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Discard Changes" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

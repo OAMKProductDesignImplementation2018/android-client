@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home_fragment"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_profile_settings_fragment"
+            android:title="@string/menuProfileSettings" />
+        <item
+            android:id="@+id/nav_display_settings_fragment"
+            android:title="@string/menuDisplaySettings" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/menuLogout" />
+    </group>
+</menu>
