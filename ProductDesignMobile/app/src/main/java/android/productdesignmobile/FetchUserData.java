@@ -27,9 +27,9 @@ public class FetchUserData extends AsyncTask<Void, Void, String> {
     private JSONObject result_json = null;
     private JSONObject user_info_json = null;
 
-    private testinterface testInterface;
+    private UserDataInterface testInterface;
 
-    public void setTestInterface(testinterface testInterface) {
+    public void setTestInterface(UserDataInterface testInterface) {
         this.testInterface = testInterface;
     }
 

@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-public class ProfileSettingsFragment extends android.support.v4.app.Fragment implements View.OnClickListener, testinterface {
+public class ProfileSettingsFragment extends android.support.v4.app.Fragment implements View.OnClickListener, UserDataInterface {
 
     private Button buttonDietarySettings;
     private Button buttonAddPicture;

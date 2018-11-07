@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <Button
+        android:id="@+id/loginButtonLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:text="@string/loginButtonLogin" />
+
+    <EditText
+        android:id="@+id/loginEditTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/loginButtonLogin"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/loginTextViewPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/loginEditTextPassword"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:text="@string/loginTextViewPassword" />
+
+    <EditText
+        android:id="@+id/loginEditTextUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/loginTextViewPassword"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/loginTextViewUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/loginEditTextUsername"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:text="@string/loginTextViewUsername" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:text="Use testi2/salasana or t5vahe01 and no password to login" />
+</RelativeLayout>

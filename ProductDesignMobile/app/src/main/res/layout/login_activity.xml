@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/loginTextViewGuide" />
+
+    <Button
+        android:id="@+id/loginButtonLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="@string/loginButtonLogin" />
+
+    <EditText
+        android:id="@+id/loginEditTextPassword"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/loginButtonLogin"
+        android:layout_centerHorizontal="true"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/loginTextViewPassword"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/loginEditTextPassword"
+        android:layout_centerHorizontal="true"
+        android:text="@string/loginTextViewPassword" />
+
+    <EditText
+        android:id="@+id/loginEditTextUsername"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/loginTextViewPassword"
+        android:layout_centerHorizontal="true"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/loginTextViewUsername"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/loginEditTextUsername"
+        android:layout_centerHorizontal="true"
+        android:text="@string/loginTextViewUsername" />
+
+</RelativeLayout>

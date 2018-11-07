@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">ProductDesignMobile</string>
 
+    <string name="loginTextViewGuide">Login screen</string>
+    <string name="loginButtonLogin">Login</string>
+    <string name="loginTextViewPassword">Password:</string>
+    <string name="loginTextViewUsername">Username:</string>
+
     <string name="menuHome">Home</string>
     <string name="menuProfileSettings">Profile Settings</string>
     <string name="menuDisplaySettings">Display Settings</string>

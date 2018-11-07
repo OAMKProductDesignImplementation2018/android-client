@@ -1,5 +1,6 @@
 package android.productdesignmobile;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -54,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.nav_display_settings_fragment:
                                 fragmentClass = DisplaySettingsFragment.class;
                                 break;
+                            case R.id.nav_logout:
+                                Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
+                                startActivity(logoutIntent);
+                                finish();
                             default:
                                 fragmentClass = HomeFragment.class;
                         }
