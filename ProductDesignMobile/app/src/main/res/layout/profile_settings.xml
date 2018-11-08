@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/colorPrimaryLightest">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/profileHeaderToolbar"
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:layout_alignParentTop="true"
-        android:background="@color/colorPrimaryLight">
+        android:background="@color/colorPrimary">
 
             <TextView
                 android:layout_width="match_parent"
@@ -47,6 +47,8 @@
             android:layout_height="40dp"
             android:layout_below="@id/textViewFirstName"
             android:background="@color/white"
+            android:textColor="@color/colorPrimaryDarkest"
+            android:textSize="15sp"
             android:inputType="textPersonName"
             android:paddingHorizontal="10sp"
             android:autofillHints="firstname"
@@ -68,6 +70,8 @@
             android:layout_height="40dp"
             android:layout_below="@id/textViewLastName"
             android:background="@color/white"
+            android:textColor="@color/colorPrimaryDarkest"
+            android:textSize="15sp"
             android:inputType="textPersonName"
             android:autofillHints="lastname"
             android:hint="@string/profileLastName"
@@ -89,6 +93,8 @@
             android:layout_height="40dp"
             android:layout_below="@id/textViewEmail"
             android:background="@color/white"
+            android:textColor="@color/colorPrimaryDarkest"
+            android:textSize="15sp"
             android:inputType="textEmailAddress"
             android:autofillHints="email"
             android:hint="@string/profileEmail"
@@ -107,6 +113,7 @@
         <Spinner
             android:id="@+id/gender_spinner"
             android:background="@color/white"
+
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@id/textViewGender"
@@ -114,25 +121,32 @@
 
         <Button
             android:id="@+id/buttonUpdateData"
+            android:background="@color/colorPrimaryDarkest"
+            android:textColor="@color/colorPrimaryLightest"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40sp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="15dp"
             android:text="@string/profileButtonUpdateData" />
 
         <Button
             android:id="@+id/buttonDietarySettings"
+            android:background="@color/colorPrimaryDarkest"
+            android:textColor="@color/colorPrimaryLightest"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40sp"
             android:layout_above="@id/buttonUpdateData"
+            android:layout_marginBottom="5sp"
             android:text="@string/profileButtonChangeDietary" />
 
         <Button
             android:id="@+id/buttonAddPicture"
-            android:background="@color/colorPrimaryLightest"
+            android:background="@color/colorPrimaryDarkest"
+            android:textColor="@color/colorPrimaryLightest"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40sp"
             android:layout_above="@id/buttonDietarySettings"
+            android:layout_marginBottom="5sp"
             android:text="@string/profileButtonAddPicture" />
     </RelativeLayout>
 

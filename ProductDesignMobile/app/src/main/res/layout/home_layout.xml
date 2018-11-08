@@ -2,24 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:background="@color/white"
+    android:background="@color/colorPrimaryLightest"
     android:orientation="vertical" >
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:background="@color/colorPrimaryLight">
+        android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/textViewDisplayHeader"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:paddingLeft="20dp"
+            android:gravity="center"
             android:fontFamily="monospace"
             android:textColor="@color/white"
-            android:paddingRight="20dp"
-            android:textSize="30dp"
+            android:textSize="20sp"
             android:text="Home Screen" />
 
     </android.support.v7.widget.Toolbar>

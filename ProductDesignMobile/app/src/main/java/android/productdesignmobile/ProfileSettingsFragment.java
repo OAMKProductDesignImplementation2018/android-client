@@ -37,8 +37,8 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
         //Dropdown menu for gender
         String[] gender_array = getResources().getStringArray(R.array.gender_array);
         gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
-        ArrayAdapter<String> gender_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, gender_array);
-        gender_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        ArrayAdapter<String> gender_adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, gender_array);
+        gender_adapter.setDropDownViewResource(R.layout.spinner_item);
         gender_spinner.setAdapter(gender_adapter);
 
         //Dropdown menu for language
