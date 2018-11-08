@@ -1,7 +1,6 @@
 package android.productdesignmobile;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -37,8 +36,8 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
 
         // Dropdown menu for gender
         String[] gender_array = getResources().getStringArray(R.array.gender_array);
-        gender_spinner = (Spinner) view.findViewById(R.id.gender_spinner);
-        ArrayAdapter<String> gender_adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, gender_array);
+        gender_spinner = view.findViewById(R.id.gender_spinner);
+        ArrayAdapter<String> gender_adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_item, gender_array);
         gender_adapter.setDropDownViewResource(R.layout.spinner_item);
         gender_spinner.setAdapter(gender_adapter);
 
@@ -49,15 +48,15 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
         //language_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         //language_spinner.setAdapter(language_adapter);
 
-        buttonDietarySettings = (Button) view.findViewById(R.id.buttonDietarySettings);
+        buttonDietarySettings = view.findViewById(R.id.buttonDietarySettings);
         buttonDietarySettings.setOnClickListener(this);
-        buttonAddPicture = (Button) view.findViewById(R.id.buttonAddPicture);
+        buttonAddPicture = view.findViewById(R.id.buttonAddPicture);
         buttonAddPicture.setOnClickListener(this);
-        buttonUpdateData = (Button) view.findViewById(R.id.buttonUpdateData);
+        buttonUpdateData = view.findViewById(R.id.buttonUpdateData);
         buttonUpdateData.setOnClickListener(this);
-        first_name = (EditText) view.findViewById(R.id.editTextFirstName);
-        last_name = (EditText) view.findViewById(R.id.editTextLastName);
-        email = (EditText) view.findViewById(R.id.editTextEmail);
+        first_name = view.findViewById(R.id.editTextFirstName);
+        last_name = view.findViewById(R.id.editTextLastName);
+        email = view.findViewById(R.id.editTextEmail);
 
         FetchUserData fetchdata = new FetchUserData(getContext(),fetchDataUrlAddress, "1");
         fetchdata.setTestInterface(this);
