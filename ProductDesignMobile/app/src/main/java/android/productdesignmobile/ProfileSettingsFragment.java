@@ -42,11 +42,11 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
         gender_spinner.setAdapter(gender_adapter);
 
         //Dropdown menu for language
-        String[] language_array = getResources().getStringArray(R.array.language_array);
-        Spinner language_spinner = (Spinner) view.findViewById(R.id.language_spinner);
-        ArrayAdapter<String> language_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, language_array);
-        language_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        language_spinner.setAdapter(language_adapter);
+        //String[] language_array = getResources().getStringArray(R.array.language_array);
+        //Spinner language_spinner = (Spinner) view.findViewById(R.id.language_spinner);
+        //ArrayAdapter<String> language_adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, language_array);
+        //language_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        //language_spinner.setAdapter(language_adapter);
 
         buttonDietarySettings = (Button) view.findViewById(R.id.buttonDietarySettings);
         buttonDietarySettings.setOnClickListener(this);

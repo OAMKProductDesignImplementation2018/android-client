@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">ProductDesignMobile</string>
 
-    <string name="loginTextViewGuide">Login screen</string>
-    <string name="loginButtonLogin">Login</string>
-    <string name="loginTextViewPassword">Password:</string>
-    <string name="loginTextViewUsername">Username:</string>
+    <string name="loginTextViewGuide">(use testi2/salasana or t5vahe01 and no password to login)</string>
+    <string name="loginButtonLogin">Sign in</string>
+    <string name="loginTextViewPassword">Password</string>
+    <string name="loginTextViewUsername">Username</string>
+
 
     <string name="menuHome">Home</string>
     <string name="menuProfileSettings">Profile Settings</string>
@@ -18,6 +19,10 @@
     <string name="profileEmail">Email</string>
     <string name="profileGender">Gender</string>
     <string name="profileLanguage">Language</string>
+
+    <string name="profileButtonUpdateData">Save changes</string>
+    <string name="profileButtonChangeDietary">Change dietary settings</string>
+    <string name="profileButtonAddPicture">Add profile picture</string>
 
     <string name="profileDietaryGlutenFree">Gluten Free</string>
     <string name="profileDietaryVegan">Vegan</string>
