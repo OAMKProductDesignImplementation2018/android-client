@@ -35,46 +35,43 @@ public class MainActivity extends AppCompatActivity {
         //Sidemenu
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    // Switch fragment on menuitemclick
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
+        // Switch fragment on menuitemclick
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            menuItem.setChecked(true);
+            mDrawerLayout.closeDrawers();
 
-                        Fragment fragment = null;
-                        Class fragmentClass;
-                        switch(menuItem.getItemId()) {
-                            case R.id.nav_home_fragment:
-                                fragmentClass = HomeFragment.class;
-                                break;
-                            case R.id.nav_profile_settings_fragment:
-                                fragmentClass = ProfileSettingsFragment.class;
-                                break;
-                            case R.id.nav_display_settings_fragment:
-                                fragmentClass = DisplaySettingsFragment.class;
-                                break;
-                            case R.id.nav_logout:
-                                Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
-                                startActivity(logoutIntent);
-                                finish();
-                            default:
-                                fragmentClass = HomeFragment.class;
-                        }
-                        try {
-                            fragment = (Fragment) fragmentClass.newInstance();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        FragmentManager fragmentManager = getSupportFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.content_frame, fragment)
-                                //Adds current fragment to stack so androids backbutton works properly
-                                .addToBackStack(null)
-                                .commit();
-                        return true;
-                    }
-                });
+            Fragment fragment1 = null;
+            Class fragmentClass1;
+            switch(menuItem.getItemId()) {
+                case R.id.nav_home_fragment:
+                    fragmentClass1 = HomeFragment.class;
+                    break;
+                case R.id.nav_profile_settings_fragment:
+                    fragmentClass1 = ProfileSettingsFragment.class;
+                    break;
+                case R.id.nav_display_settings_fragment:
+                    fragmentClass1 = DisplaySettingsFragment.class;
+                    break;
+                case R.id.nav_logout:
+                    Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(logoutIntent);
+                    finish();
+                default:
+                    fragmentClass1 = HomeFragment.class;
+                    break;
+            }
+            try {
+                fragment1 = (Fragment) fragmentClass1.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            FragmentManager fragmentManager1 = getSupportFragmentManager();
+            fragmentManager1.beginTransaction()
+                    .replace(R.id.content_frame, fragment1)
+                    //Adds current fragment to stack so androids backbutton works properly
+                    .addToBackStack(null)
+                    .commit();
+            return true;
+        });
     }
 }

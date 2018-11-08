@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +25,13 @@ public class PhotoOptionsFragment extends Fragment implements View.OnClickListen
     private ImageView mSelectedImage;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.photo_options, parent, false);
     }
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        imageViewProfilePicture = (ImageView) getActivity().findViewById(R.id.imageViewProfilePicture);
-        buttonAddPictureFile = (Button) getActivity().findViewById(R.id.buttonAddPictureFile);
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        imageViewProfilePicture = view.findViewById(R.id.imageViewProfilePicture);
+        buttonAddPictureFile = view.findViewById(R.id.buttonAddPictureFile);
         buttonAddPictureFile.setOnClickListener(this);
     }
 
