@@ -47,4 +47,6 @@
         <item>English</item>
         <item>Finnish</item>
     </string-array>
+
+    <string name="noCameraAvailable">Your device does not have a camera!</string>
 </resources>

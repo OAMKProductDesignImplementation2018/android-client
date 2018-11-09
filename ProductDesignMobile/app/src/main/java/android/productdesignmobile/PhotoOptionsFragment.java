@@ -1,8 +1,10 @@
 package android.productdesignmobile;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,19 +12,25 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-public class PhotoOptionsFragment extends Fragment implements View.OnClickListener {
+import java.util.Objects;
 
-    private Button buttonAddPictureFile;
+public class PhotoOptionsFragment extends Fragment {
+
     private ImageView imageViewProfilePicture;
-    private static final int GALLERY = 999;
     private ImageView mSelectedImage;
+
+    private static final int CAMERA_PERMISSION = 20;
+    private static final int CAMERA_INTENT = 21;
+    private static final int GALLERY_INTENT = 22;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -30,30 +38,54 @@ public class PhotoOptionsFragment extends Fragment implements View.OnClickListen
     }
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        // Load views
         imageViewProfilePicture = view.findViewById(R.id.imageViewProfilePicture);
-        buttonAddPictureFile = view.findViewById(R.id.buttonAddPictureFile);
-        buttonAddPictureFile.setOnClickListener(this);
+
+        // Select picture from gallery
+        final Button buttonAddPictureFile = view.findViewById(R.id.buttonAddPictureFile);
+        buttonAddPictureFile.setOnClickListener(v -> choosePhotoFromGallery());
+
+        // Capture new picture with camera
+        final Button buttonUseCamera = view.findViewById(R.id.buttonAddPhotoCamera);
+        buttonUseCamera.setOnClickListener(v -> {
+            // Check if device has a camera
+            if (getActivity() != null && !getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+                Toast.makeText(getContext(), getString(R.string.noCameraAvailable), Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            // Request permissions or launch camera intent
+            if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
+            else
+                launchCamera();
+        });
     }
 
     @Override
-    public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.buttonAddPictureFile:
-                    choosePhotoFromGallery();
-            }
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
+    {
+        switch (requestCode) {
+            case CAMERA_PERMISSION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    // Permissions are granted, launch camera
+                    launchCamera();
+                break;
+            default:
+                break;
         }
-
+    }
 
     public void choosePhotoFromGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, GALLERY);
+        startActivityForResult(galleryIntent, GALLERY_INTENT);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == GALLERY  && resultCode == Activity.RESULT_OK) {
+        if (requestCode == GALLERY_INTENT && resultCode == Activity.RESULT_OK) {
             MainActivity activity = (MainActivity)getActivity();
-            Bitmap bitmap = getBitmapFromCameraData(data, activity);
+            Bitmap bitmap = getBitmapFromCameraData(data, Objects.requireNonNull(activity));
             imageViewProfilePicture.setImageBitmap(bitmap);
         }
     }
@@ -85,12 +117,19 @@ public class PhotoOptionsFragment extends Fragment implements View.OnClickListen
     public static Bitmap getBitmapFromCameraData(Intent data, Context context){
         Uri selectedImage = data.getData();
         String[] filePathColumn = { MediaStore.Images.Media.DATA };
-        Cursor cursor = context.getContentResolver().query(selectedImage,filePathColumn, null, null, null);
-        cursor.moveToFirst();
+        Cursor cursor = context.getContentResolver().query(Objects.requireNonNull(selectedImage),filePathColumn, null, null, null);
+        Objects.requireNonNull(cursor).moveToFirst();
         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
         String picturePath = cursor.getString(columnIndex);
         cursor.close();
         return BitmapFactory.decodeFile(picturePath);
+    }
+
+    void launchCamera()
+    {
+        Intent cameraIntent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+        if (getActivity() != null && cameraIntent.resolveActivity(getActivity().getPackageManager()) != null)
+            getActivity().startActivityForResult(cameraIntent, CAMERA_INTENT);
     }
 }
 
