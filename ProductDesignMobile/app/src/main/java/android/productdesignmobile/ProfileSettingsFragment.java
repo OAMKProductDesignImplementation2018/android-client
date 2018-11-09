@@ -1,6 +1,7 @@
 package android.productdesignmobile;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import java.util.Objects;
 
 public class ProfileSettingsFragment extends android.support.v4.app.Fragment implements View.OnClickListener, UserDataInterface {
 
@@ -30,14 +33,14 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
     String updateDataUrlAddress="http://productdesign.westeurope.cloudapp.azure.com/android_api/update_user_data.php";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                              Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_settings, container, false);
 
         // Dropdown menu for gender
         String[] gender_array = getResources().getStringArray(R.array.gender_array);
         gender_spinner = view.findViewById(R.id.gender_spinner);
-        ArrayAdapter<String> gender_adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_item, gender_array);
+        ArrayAdapter<String> gender_adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), R.layout.spinner_item, gender_array);
         gender_adapter.setDropDownViewResource(R.layout.spinner_item);
         gender_spinner.setAdapter(gender_adapter);
 
@@ -79,9 +82,9 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
                     e.printStackTrace();
                 }
 
-                FragmentManager fragmentManagerDietarySettings = getChildFragmentManager();
+                FragmentManager fragmentManagerDietarySettings = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
                 fragmentManagerDietarySettings.beginTransaction()
-                        .replace(R.id.content_frame, fragment)
+                        .replace(R.id.content_frame, Objects.requireNonNull(fragment))
                         .addToBackStack(null)
                         .commit();
                 break;
@@ -93,9 +96,9 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                FragmentManager fragmentManagerAddPicture = getChildFragmentManager();
+                FragmentManager fragmentManagerAddPicture = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
                 fragmentManagerAddPicture.beginTransaction()
-                        .replace(R.id.content_frame, fragment)
+                        .replace(R.id.content_frame, Objects.requireNonNull(fragment))
                         .addToBackStack(null)
                         .commit();
                 break;
