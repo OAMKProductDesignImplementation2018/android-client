@@ -1,6 +1,5 @@
 package android.productdesignmobile;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,8 +22,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -37,9 +36,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        username = (EditText) findViewById(R.id.loginEditTextUsername);
-        password = (EditText) findViewById(R.id.loginEditTextPassword);
-        Button login_button = (Button) findViewById(R.id.loginButtonLogin);
+        username = findViewById(R.id.loginEditTextUsername);
+        password = findViewById(R.id.loginEditTextPassword);
+        Button login_button = findViewById(R.id.loginButtonLogin);
         login_button.setOnClickListener(this);
     }
 
@@ -84,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
-                writer.write(query);
+                writer.write(Objects.requireNonNull(query));
                 writer.flush();
                 writer.close();
                 os.close();
@@ -119,14 +118,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         @Override
         protected void onPostExecute(String result) {
-            if(result.equalsIgnoreCase("true"))
+            if (result.equalsIgnoreCase("true"))
             {
                 //save user_id so proper data can be fetched later
+
                 SharedPreferences prefs = LoginActivity.this.getSharedPreferences(
                         "product_design_shared", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putInt("user_id_key", 2);
-                editor.commit();
+                editor.apply();
 
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                 startActivity(intent);

@@ -8,6 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
+                .replace(R.id.content_frame, Objects.requireNonNull(fragment))
                 .commit();
 
         //Sidemenu
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             }
             FragmentManager fragmentManager1 = getSupportFragmentManager();
             fragmentManager1.beginTransaction()
-                    .replace(R.id.content_frame, fragment1)
+                    .replace(R.id.content_frame, Objects.requireNonNull(fragment1))
                     //Adds current fragment to stack so androids backbutton works properly
                     .addToBackStack(null)
                     .commit();
