@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package="android.productdesignmobile">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="android.productdesignmobile">
 
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.INTERNET" />
+
+<uses-feature android:name="android.hardware.camera2" android:required="false"/>
 
 <application
     android:allowBackup="true"
@@ -13,7 +16,8 @@ package="android.productdesignmobile">
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:usesCleartextTraffic="true"
-    android:theme="@style/AppTheme">
+    android:theme="@style/AppTheme"
+    tools:ignore="GoogleAppIndexingWarning">
     <activity android:name=".LoginActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -24,5 +28,15 @@ package="android.productdesignmobile">
     <activity android:name=".MainActivity">
 
     </activity>
+
+    <provider
+        android:authorities="android.productdesignmobile"
+        android:name="android.support.v4.content.FileProvider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths" />
+    </provider>
 </application>
 </manifest>

@@ -8,12 +8,15 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +24,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class PhotoOptionsFragment extends Fragment {
 
-    private ImageView imageViewProfilePicture;
-    private ImageView mSelectedImage;
+    // Imageview to show the thumbnail of your profile picture
+    private ImageView selectedImageThumbnail;
+    // Path to the picture
+    private String selectedImagePathRealSize;
 
     private static final int CAMERA_PERMISSION = 20;
     private static final int CAMERA_INTENT = 21;
@@ -39,7 +49,7 @@ public class PhotoOptionsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         // Load views
-        imageViewProfilePicture = view.findViewById(R.id.imageViewProfilePicture);
+        selectedImageThumbnail = view.findViewById(R.id.imageViewProfilePicture);
 
         // Select picture from gallery
         final Button buttonAddPictureFile = view.findViewById(R.id.buttonAddPictureFile);
@@ -82,18 +92,34 @@ public class PhotoOptionsFragment extends Fragment {
         startActivityForResult(galleryIntent, GALLERY_INTENT);
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == GALLERY_INTENT && resultCode == Activity.RESULT_OK) {
-            MainActivity activity = (MainActivity)getActivity();
-            Bitmap bitmap = getBitmapFromCameraData(data, Objects.requireNonNull(activity));
-            imageViewProfilePicture.setImageBitmap(bitmap);
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case GALLERY_INTENT: {
+                    MainActivity activity = (MainActivity) getActivity();
+                    Bitmap bitmap = getBitmapFromCameraData(data, Objects.requireNonNull(activity));
+                    selectedImageThumbnail.setImageBitmap(bitmap);
+                } break;
+                case CAMERA_INTENT: {
+                    // Create a thumbnail of the picture
+                    // todo: correct size
+                    final int THUMBSIZE = 256;
+                    Bitmap bitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(selectedImagePathRealSize), THUMBSIZE, THUMBSIZE);
+                    selectedImageThumbnail.setImageBitmap(bitmap);
+                } break;
+                default:
+                    break;
+            }
         }
     }
 
     private void setFullImageFromFilePath(String imagePath) {
         // Get the dimensions of the View
-        int targetW = mSelectedImage.getWidth();
-        int targetH = mSelectedImage.getHeight();
+        int targetW = selectedImageThumbnail.getWidth();
+        int targetH = selectedImageThumbnail.getHeight();
 
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -111,7 +137,7 @@ public class PhotoOptionsFragment extends Fragment {
         bmOptions.inPurgeable = true;
 
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath, bmOptions);
-        mSelectedImage.setImageBitmap(bitmap);
+        selectedImageThumbnail.setImageBitmap(bitmap);
     }
 
     public static Bitmap getBitmapFromCameraData(Intent data, Context context){
@@ -125,12 +151,33 @@ public class PhotoOptionsFragment extends Fragment {
         return BitmapFactory.decodeFile(picturePath);
     }
 
-    void launchCamera()
+    private void launchCamera()
     {
-        Intent cameraIntent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-        if (getActivity() != null && cameraIntent.resolveActivity(getActivity().getPackageManager()) != null)
-            getActivity().startActivityForResult(cameraIntent, CAMERA_INTENT);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (getActivity() != null && cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Create temporary file from the image
+            File photo = null;
+            try { photo = createImageFile(); }
+            catch (IOException e) { e.printStackTrace(); }
+
+            // Add the file name and location into intent
+            if (photo != null && getContext() != null) {
+                Uri photoURI = FileProvider.getUriForFile(getContext(), "android.productdesignmobile", photo);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+
+                // Save the file path for later use
+                selectedImagePathRealSize = photo.getAbsolutePath();
+            }
+            startActivityForResult(cameraIntent, CAMERA_INTENT);
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Creates new temporary image file and stores it in pictures
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String fileName = "IMG_" + timeStamp + "_";
+
+        File storageDir = Objects.requireNonNull(getActivity()).getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        return File.createTempFile(fileName, ".jpg", storageDir);
     }
 }
-
-
