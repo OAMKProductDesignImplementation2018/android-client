@@ -2,7 +2,6 @@ package android.productdesignmobile;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -39,8 +38,10 @@ public class PhotoOptionsFragment extends Fragment {
     private String selectedImagePathRealSize;
 
     private static final int CAMERA_PERMISSION = 20;
-    private static final int CAMERA_INTENT = 21;
-    private static final int GALLERY_INTENT = 22;
+    private static final int STORAGE_PERMISSION = 21;
+
+    private static final int CAMERA_INTENT = 22;
+    private static final int GALLERY_INTENT = 23;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -53,7 +54,13 @@ public class PhotoOptionsFragment extends Fragment {
 
         // Select picture from gallery
         final Button buttonAddPictureFile = view.findViewById(R.id.buttonAddPictureFile);
-        buttonAddPictureFile.setOnClickListener(v -> choosePhotoFromGallery());
+        buttonAddPictureFile.setOnClickListener(v -> {
+            // Request permissions or launch gallery intent
+            if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION);
+            else
+                choosePhotoFromGallery();
+        });
 
         // Capture new picture with camera
         final Button buttonUseCamera = view.findViewById(R.id.buttonAddPhotoCamera);
@@ -81,6 +88,11 @@ public class PhotoOptionsFragment extends Fragment {
                     // Permissions are granted, launch camera
                     launchCamera();
                 break;
+            case STORAGE_PERMISSION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    // Permissions are granted, launch gallery
+                    choosePhotoFromGallery();
+                break;
             default:
                 break;
         }
@@ -96,18 +108,27 @@ public class PhotoOptionsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // todo: fix thumbnail size and orientation change in some pictures
+        final int THUMB_SIZE = 256;
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case GALLERY_INTENT: {
-                    MainActivity activity = (MainActivity) getActivity();
-                    Bitmap bitmap = getBitmapFromCameraData(data, Objects.requireNonNull(activity));
-                    selectedImageThumbnail.setImageBitmap(bitmap);
-                } break;
+                    if (data.getData() != null && getActivity() != null) {
+                        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                        // Get path to the chosen picture
+                        Cursor cursor = getActivity().getContentResolver().query(data.getData(), filePathColumn, null, null, null);
+                        if (cursor != null)
+                        {
+                            cursor.moveToFirst();
+                            selectedImagePathRealSize = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
+                            cursor.close();
+                        }
+                    }
+                } // no break here
                 case CAMERA_INTENT: {
                     // Create a thumbnail of the picture
-                    // todo: correct size
-                    final int THUMBSIZE = 256;
-                    Bitmap bitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(selectedImagePathRealSize), THUMBSIZE, THUMBSIZE);
+                    Bitmap bitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(selectedImagePathRealSize), THUMB_SIZE, THUMB_SIZE);
                     selectedImageThumbnail.setImageBitmap(bitmap);
                 } break;
                 default:
@@ -116,48 +137,13 @@ public class PhotoOptionsFragment extends Fragment {
         }
     }
 
-    private void setFullImageFromFilePath(String imagePath) {
-        // Get the dimensions of the View
-        int targetW = selectedImageThumbnail.getWidth();
-        int targetH = selectedImageThumbnail.getHeight();
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(imagePath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath, bmOptions);
-        selectedImageThumbnail.setImageBitmap(bitmap);
-    }
-
-    public static Bitmap getBitmapFromCameraData(Intent data, Context context){
-        Uri selectedImage = data.getData();
-        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-        Cursor cursor = context.getContentResolver().query(Objects.requireNonNull(selectedImage),filePathColumn, null, null, null);
-        Objects.requireNonNull(cursor).moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
-        return BitmapFactory.decodeFile(picturePath);
-    }
-
     private void launchCamera()
     {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (getActivity() != null && cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             // Create temporary file from the image
             File photo = null;
-            try { photo = createImageFile(); }
+            try { photo = createTempImageFile(); }
             catch (IOException e) { e.printStackTrace(); }
 
             // Add the file name and location into intent
@@ -172,7 +158,7 @@ public class PhotoOptionsFragment extends Fragment {
         }
     }
 
-    private File createImageFile() throws IOException {
+    private File createTempImageFile() throws IOException {
         // Creates new temporary image file and stores it in pictures
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String fileName = "IMG_" + timeStamp + "_";
