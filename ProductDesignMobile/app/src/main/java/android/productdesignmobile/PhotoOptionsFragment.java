@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -25,11 +24,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.loopj.android.http.*;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -37,7 +31,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-import okhttp3.Call;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -53,10 +47,7 @@ public class PhotoOptionsFragment extends Fragment {
     private String selectedImagePathRealSize;
 
     private final OkHttpClient client = new OkHttpClient();
-    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-
-    public static final MediaType MEDIA_TYPE_MARKDOWN
-            = MediaType.parse("text/x-markdown; charset=utf-8");
+    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png; boundary");
 
     private static final int CAMERA_PERMISSION = 20;
     private static final int STORAGE_PERMISSION = 21;
@@ -102,28 +93,26 @@ public class PhotoOptionsFragment extends Fragment {
         //upload
         final Button buttonUpload = view.findViewById(R.id.buttonSavePicture);
         buttonUpload.setOnClickListener(v -> {
-            Thread thread = new Thread() {
-                @Override
-                public void run() {
-                    RequestBody requestBody = new MultipartBody.Builder()
-                            .setType(MultipartBody.FORM)
-                            .addFormDataPart("image", "test.png",
-                                    RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImagePathRealSize)))
-                            .build();
-                    Log.d("temp", requestBody.toString());
-                    Request request = new Request.Builder()
-                            .url("https://facedatabasetest.azurewebsites.net/api/MobileTrigger")
-                            .post(requestBody)
-                            .build();
+            Thread thread = new Thread(() -> {
 
-                    try (Response response = client.newCall(request).execute()) {
-                        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-                        Log.d("uploadImage response: ", response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                MultipartBody requestBody = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addPart(Headers.of("Content-Disposition", "form-data; name=\"image\""),
+                                RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImagePathRealSize)))
+                        .build();
+
+                Request request = new Request.Builder()
+                        .url("https://facedatabasetest.azurewebsites.net/api/MobileTrigger")
+                        .post(requestBody)
+                        .build();
+
+                try (Response response = client.newCall(request).execute()) {
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                    Log.d("PRODU_DEV", response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            };
+            });
             thread.start();
         });
     }
