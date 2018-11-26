@@ -1,55 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:gravity="center_horizontal"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorPrimaryLightest"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textViewDisplayHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="30dp"
-        android:text="Photo Settings" />
-
     <ImageView
         android:id="@+id/imageViewProfilePicture"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@id/buttonAddPictureFile"
+        android:layout_marginVertical="10dp"
         android:src="@drawable/nophoto"/>
 
     <Button
         android:id="@+id/buttonAddPictureFile"
+        android:background="@color/colorPrimaryDarkest"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add profile image from files" />
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@id/buttonAddPhotoCamera"
+        android:text="Add profile image from files"
+        android:textColor="@color/colorPrimaryLightest"/>
 
     <Button
         android:id="@+id/buttonAddPhotoCamera"
+        android:background="@color/colorPrimaryDarkest"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Use camera to take profile image" />
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@id/buttonRemovePicture"
+        android:text="Use camera to take profile image"
+        android:textColor="@color/colorPrimaryLightest"/>
 
     <Button
         android:id="@+id/buttonRemovePicture"
+        android:background="@color/colorPrimaryDarkest"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Remove Profile Picture" />
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@id/buttonSavePicture"
+        android:text="Remove Profile Picture"
+        android:textColor="@color/colorPrimaryLightest"/>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent" android:layout_height="0dp"
-        android:gravity="center_horizontal|bottom"
-        android:layout_weight="1"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:orientation="vertical" >
-        <Button
-            android:id="@+id/buttonSavePicture"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="@string/pictureSaveButton" />
-    </LinearLayout>
-</LinearLayout>
+    <Button
+        android:id="@+id/buttonSavePicture"
+        android:background="@color/colorPrimaryDarkest"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:text="@string/pictureSaveButton"
+        android:textColor="@color/colorPrimaryLightest"/>
+</RelativeLayout>
