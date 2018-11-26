@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -16,12 +17,18 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.loopj.android.http.*;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,12 +37,26 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class PhotoOptionsFragment extends Fragment {
 
     // Imageview to show the thumbnail of your profile picture
     private ImageView selectedImageThumbnail;
     // Path to the picture
     private String selectedImagePathRealSize;
+
+    private final OkHttpClient client = new OkHttpClient();
+    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+
+    public static final MediaType MEDIA_TYPE_MARKDOWN
+            = MediaType.parse("text/x-markdown; charset=utf-8");
 
     private static final int CAMERA_PERMISSION = 20;
     private static final int STORAGE_PERMISSION = 21;
@@ -76,6 +97,34 @@ public class PhotoOptionsFragment extends Fragment {
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
             else
                 launchCamera();
+        });
+
+        //upload
+        final Button buttonUpload = view.findViewById(R.id.buttonSavePicture);
+        buttonUpload.setOnClickListener(v -> {
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    RequestBody requestBody = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("image", "test.png",
+                                    RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImagePathRealSize)))
+                            .build();
+                    Log.d("temp", requestBody.toString());
+                    Request request = new Request.Builder()
+                            .url("https://facedatabasetest.azurewebsites.net/api/MobileTrigger")
+                            .post(requestBody)
+                            .build();
+
+                    try (Response response = client.newCall(request).execute()) {
+                        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                        Log.d("uploadImage response: ", response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            thread.start();
         });
     }
 
