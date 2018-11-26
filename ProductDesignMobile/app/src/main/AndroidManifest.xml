@@ -28,6 +28,9 @@
     <activity android:name=".MainActivity">
 
     </activity>
+    <activity android:name=".SignUpActivity">
+
+    </activity>
 
     <provider
         android:authorities="android.productdesignmobile"

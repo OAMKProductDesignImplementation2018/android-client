@@ -25,7 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText username, password;
     public static final int CONNECTION_TIMEOUT=10000;
@@ -38,18 +38,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         username = findViewById(R.id.loginEditTextUsername);
         password = findViewById(R.id.loginEditTextPassword);
-        Button login_button = findViewById(R.id.loginButtonLogin);
-        login_button.setOnClickListener(this);
-    }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.loginButtonLogin:
-                final String login_username = username.getText().toString();
-                final String login_password = password.getText().toString();
-                new AsyncLogin().execute(login_username,login_password);
-        }
+        Button login_button = findViewById(R.id.loginButtonLogin);
+        login_button.setOnClickListener(v -> {
+            final String login_username = username.getText().toString();
+            final String login_password = password.getText().toString();
+            new AsyncLogin().execute(login_username,login_password);
+        });
+
+        Button signup_button = findViewById(R.id.loginButtonSignUp);
+        signup_button.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
+            startActivity(intent);
+        });
     }
 
     private class AsyncLogin extends AsyncTask<String, String, String>

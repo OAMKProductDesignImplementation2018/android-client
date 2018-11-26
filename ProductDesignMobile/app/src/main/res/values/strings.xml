@@ -5,6 +5,15 @@
     <string name="loginButtonLogin">Sign in</string>
     <string name="loginTextViewPassword">Password</string>
     <string name="loginTextViewUsername">Username</string>
+    <string name="loginTextViewSignUp">Dont have account yet?</string>
+    <string name="loginButtonSignUp">Sign up</string>
+
+    <string name="signUpTextViewHeader">Sign Up</string>
+    <string name="signUpHintFirstName">First name</string>
+    <string name="signUpHintLastName">Last name</string>
+    <string name="signUpHintEmail">Email</string>
+    <string name="signUpHintPassword">Password</string>
+    <string name="signUpButtonSignUp">Sign Up</string>
 
 
     <string name="menuHome">Home</string>
