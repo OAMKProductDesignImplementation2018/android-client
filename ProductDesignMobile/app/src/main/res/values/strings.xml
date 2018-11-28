@@ -2,10 +2,10 @@
     <string name="app_name">ProductDesignMobile</string>
 
     <string name="loginTextViewGuide">(use testi2/salasana or t5vahe01 and no password to login)</string>
-    <string name="loginButtonLogin">Sign in</string>
+    <string name="loginButtonLogin">Login</string>
     <string name="loginTextViewPassword">Password</string>
     <string name="loginTextViewUsername">Username</string>
-    <string name="loginTextViewSignUp">Dont have account yet?</string>
+    <string name="loginTextViewSignUp">Register here.</string>
     <string name="loginButtonSignUp">Sign up</string>
 
     <string name="signUpTextViewHeader">Sign Up</string>
@@ -15,6 +15,7 @@
     <string name="signUpHintPassword">Password</string>
     <string name="signUpButtonSignUp">Sign Up</string>
 
+    <string name="homeTextViewHeader">Home Screen</string>
 
     <string name="menuHome">Home</string>
     <string name="menuProfileSettings">Profile Settings</string>
@@ -40,6 +41,9 @@
     <string name="profileDietaryLowLactose">Low Lactose</string>
     <string name="profileDietarySaveButton">Save dietary settings</string>
 
+    <string name="photoTextViewHeader">Photo Options</string>
+
+    <string name="displayTextViewHeader">Display Settings</string>
     <string name="displayShowCalendar">Show Calendar</string>
     <string name="displayShowFoodMenu">Show Food Menu</string>
 

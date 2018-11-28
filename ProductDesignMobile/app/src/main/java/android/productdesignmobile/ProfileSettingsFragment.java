@@ -2,8 +2,10 @@ package android.productdesignmobile;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +54,16 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
         //language_spinner.setAdapter(language_adapter);
 
         buttonDietarySettings = view.findViewById(R.id.buttonDietarySettings);
-        buttonDietarySettings.setOnClickListener(this);
+        buttonDietarySettings.setOnClickListener(v -> {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+            if (prev != null) {
+                ft.remove(prev);
+            }
+            ft.addToBackStack(null);
+            DialogFragment dialogFragment = new DietarySettingsFragment();
+            dialogFragment.show(ft, "dialog");
+        });
         buttonAddPicture = view.findViewById(R.id.buttonAddPicture);
         buttonAddPicture.setOnClickListener(this);
         buttonUpdateData = view.findViewById(R.id.buttonUpdateData);

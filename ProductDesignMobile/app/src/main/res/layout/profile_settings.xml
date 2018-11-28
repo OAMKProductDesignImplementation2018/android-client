@@ -2,43 +2,51 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryLightest">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/profileHeaderToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="@string/profileSettingsHeader"
-                android:gravity="center"
-                android:fontFamily="monospace"
-                android:textSize="20sp"/>
-    </android.support.v7.widget.Toolbar>
+    android:background="@color/colorPalettonLight">
 
     <RelativeLayout
         android:id="@+id/profileContentRL"
-        android:layout_below="@id/profileHeaderToolbar"
-        android:paddingLeft="40sp"
-        android:paddingRight="40sp"
+        android:background="@drawable/rounded_background_primary"
+        android:layout_alignParentTop="true"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="20dp"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="15sp">
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/profileImageViewIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@android:drawable/ic_menu_manage" />
+
+        <TextView
+            android:id="@+id/profileTextViewHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="30sp"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:text="@string/profileSettingsHeader"/>
 
         <TextView
             android:id="@+id/textViewFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:textColor="@color/colorPrimaryDarkest"
+            android:layout_below="@id/profileTextViewHeader"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorPalettonDark"
             android:text="@string/profileFirstName" />
 
         <EditText
@@ -46,8 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@id/textViewFirstName"
-            android:background="@color/white"
-            android:textColor="@color/colorPrimaryDarkest"
+            android:background="@drawable/rounded_edittext"
+            android:textColor="@color/colorPalettonDark"
             android:textSize="15sp"
             android:inputType="textPersonName"
             android:paddingHorizontal="10sp"
@@ -61,7 +69,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextFirstName"
             android:layout_marginTop="10dp"
-            android:textColor="@color/colorPrimaryDarkest"
+            android:textSize="15sp"
+            android:textColor="@color/colorPalettonDark"
             android:text="@string/profileLastName" />
 
         <EditText
@@ -69,8 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@id/textViewLastName"
-            android:background="@color/white"
-            android:textColor="@color/colorPrimaryDarkest"
+            android:background="@drawable/rounded_edittext"
+            android:textColor="@color/colorPalettonDark"
             android:textSize="15sp"
             android:inputType="textPersonName"
             android:autofillHints="lastname"
@@ -83,7 +92,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextLastName"
-            android:textColor="@color/colorPrimaryDarkest"
+            android:textSize="15sp"
+            android:textColor="@color/colorPalettonDark"
             android:layout_marginTop="10dp"
             android:text="@string/profileEmail" />
 
@@ -92,8 +102,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@id/textViewEmail"
-            android:background="@color/white"
-            android:textColor="@color/colorPrimaryDarkest"
+            android:background="@drawable/rounded_edittext"
+            android:textColor="@color/colorPalettonDark"
             android:textSize="15sp"
             android:inputType="textEmailAddress"
             android:autofillHints="email"
@@ -106,14 +116,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextEmail"
-            android:textColor="@color/colorPrimaryDarkest"
+            android:textSize="15sp"
+            android:textColor="@color/colorPalettonDark"
             android:layout_marginTop="10dp"
             android:text="@string/profileGender" />
 
         <Spinner
             android:id="@+id/gender_spinner"
-            android:background="@color/white"
-
+            android:background="@drawable/rounded_edittext"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@id/textViewGender"
@@ -121,30 +131,29 @@
 
         <Button
             android:id="@+id/buttonUpdateData"
-            android:background="@color/colorPrimaryDarkest"
-            android:textColor="@color/colorPrimaryLightest"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
+            android:layout_height="40dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="15dp"
             android:text="@string/profileButtonUpdateData" />
 
         <Button
             android:id="@+id/buttonDietarySettings"
-            android:background="@color/colorPrimaryDarkest"
-            android:textColor="@color/colorPrimaryLightest"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
+            android:layout_height="40dp"
             android:layout_above="@id/buttonUpdateData"
             android:layout_marginBottom="5sp"
             android:text="@string/profileButtonChangeDietary" />
 
         <Button
             android:id="@+id/buttonAddPicture"
-            android:background="@color/colorPrimaryDarkest"
-            android:textColor="@color/colorPrimaryLightest"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
+            android:layout_height="40dp"
             android:layout_above="@id/buttonDietarySettings"
             android:layout_marginBottom="5sp"
             android:text="@string/profileButtonAddPicture" />

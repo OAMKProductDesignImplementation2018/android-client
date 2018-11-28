@@ -1,16 +1,19 @@
 package android.productdesignmobile;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -36,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
+
+
         username = findViewById(R.id.loginEditTextUsername);
         password = findViewById(R.id.loginEditTextPassword);
 
@@ -46,10 +51,16 @@ public class LoginActivity extends AppCompatActivity {
             new AsyncLogin().execute(login_username,login_password);
         });
 
-        Button signup_button = findViewById(R.id.loginButtonSignUp);
+        TextView signup_button = findViewById(R.id.loginTextViewSignUp);
         signup_button.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
-            startActivity(intent);
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+            if (prev != null) {
+                ft.remove(prev);
+            }
+            ft.addToBackStack(null);
+            DialogFragment dialogFragment = new RegisterFragment();
+            dialogFragment.show(getSupportFragmentManager(), "dialog");
         });
     }
 

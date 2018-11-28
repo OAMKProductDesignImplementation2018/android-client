@@ -1,56 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPalettonPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="40dp">
-
-    <EditText
-        android:id="@+id/signUpEditTextEmail"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:inputType="textEmailAddress"
-        android:textAlignment="center"
-        android:hint="@string/signUpHintEmail"/>
-
-    <EditText
-        android:id="@+id/signUpEditTextLastName"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_above="@id/signUpEditTextEmail"
-        android:layout_marginVertical="10dp"
-        android:layout_centerHorizontal="true"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        android:hint="@string/signUpHintLastName"/>
+    android:padding="20dp">
 
     <EditText
         android:id="@+id/signUpEditTextFirstName"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_above="@id/signUpEditTextLastName"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:inputType="textPersonName"
         android:textAlignment="center"
         android:hint="@string/signUpHintFirstName"/>
 
-    <TextView
-        android:id="@+id/signupTextViewHeader"
-        android:textColor="@color/white"
+    <EditText
+        android:id="@+id/signUpEditTextLastName"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/signUpEditTextFirstName"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="monospace"
+        android:layout_height="40dp"
+        android:layout_below="@id/signUpEditTextFirstName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:inputType="textPersonName"
         android:textAlignment="center"
-        android:textSize="25sp"
-        android:text="@string/signUpTextViewHeader"/>
+        android:hint="@string/signUpHintLastName"/>
+
+    <EditText
+        android:id="@+id/signUpEditTextEmail"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/signUpEditTextLastName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:inputType="textEmailAddress"
+        android:textAlignment="center"
+        android:hint="@string/signUpHintEmail"/>
 
     <EditText
         android:id="@+id/signUpEditTextPassword"
@@ -58,20 +47,20 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/signUpEditTextEmail"
-        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:inputType="textPassword"
         android:textAlignment="center"
         android:hint="@string/signUpHintPassword"/>
 
     <Button
         android:id="@+id/signUpButtonSignUp"
-        android:background="@color/colorPrimaryLightest"
+        android:background="@drawable/rounded_button"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/signUpEditTextPassword"
         android:layout_marginTop="10dp"
         android:text="@string/signUpButtonSignUp"
-        android:textColor="@color/colorPrimaryDarkest"/>
+        android:textColor="@color/white"/>
 
 </RelativeLayout>

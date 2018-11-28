@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:background="@color/colorPrimaryLightest"
-    android:orientation="vertical" >
+    android:background="@color/colorPalettonLight">
 
-    <android.support.v7.widget.Toolbar
+    <RelativeLayout
+        android:background="@drawable/rounded_background_primary"
+        android:layout_alignParentTop="true"
+        android:padding="20dp"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:background="@color/colorPrimary">
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/homeImageViewIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp" />
 
         <TextView
-            android:id="@+id/textViewDisplayHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/homeTextViewHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="30sp"
+            android:layout_centerHorizontal="true"
             android:textAlignment="center"
-            android:gravity="center"
-            android:fontFamily="monospace"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:text="Home Screen" />
+            android:text="@string/homeTextViewHeader"/>
 
-    </android.support.v7.widget.Toolbar>
-
+    </RelativeLayout>
 
 
-</LinearLayout>
+
+</RelativeLayout>

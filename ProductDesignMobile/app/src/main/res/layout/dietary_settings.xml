@@ -1,69 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/textViewDisplayHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="30dp"
-        android:text="Dietary Settings" />
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorPalettonPrimary"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="40dp">
 
     <CheckBox
         android:id="@+id/checkBoxGlutenFree"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="15dp"
-        android:text="@string/profileDietaryGlutenFree" />
+        android:text="@string/profileDietaryGlutenFree"
+        android:textColor="@color/colorPalettonDark"/>
 
     <CheckBox
         android:id="@+id/checkBoxLactoseFree"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/checkBoxGlutenFree"
         android:layout_marginTop="15dp"
-        android:text="@string/profileDietaryLactoseFree" />
+        android:text="@string/profileDietaryLactoseFree"
+        android:textColor="@color/colorPalettonDark"/>
 
     <CheckBox
         android:id="@+id/checkBoxLowLactose"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/checkBoxLactoseFree"
         android:layout_marginTop="15dp"
-        android:text="@string/profileDietaryLowLactose" />
+        android:text="@string/profileDietaryLowLactose"
+        android:textColor="@color/colorPalettonDark"/>
 
     <CheckBox
         android:id="@+id/checkBoxMilkless"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/checkBoxLowLactose"
         android:layout_marginTop="15dp"
-        android:text="@string/profileDietaryMilkless" />
+        android:text="@string/profileDietaryMilkless"
+        android:textColor="@color/colorPalettonDark"/>
 
     <CheckBox
         android:id="@+id/checkBoxVegan"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/checkBoxMilkless"
         android:layout_marginTop="15dp"
-        android:text="@string/profileDietaryVegan" />
+        android:text="@string/profileDietaryVegan"
+        android:textColor="@color/colorPalettonDark"/>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent" android:layout_height="0dp"
-        android:gravity="center_horizontal|bottom"
-        android:layout_weight="1"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:orientation="vertical" >
-        <Button
-            android:id="@+id/buttonSaveDietary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="@string/profileDietarySaveButton" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/buttonSaveDietary"
+        android:background="@drawable/rounded_button"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/checkBoxVegan"
+        android:layout_marginVertical="15dp"
+        android:layout_centerHorizontal="true"
+        android:paddingHorizontal="10dp"
+        android:text="@string/profileDietarySaveButton"
+        android:textColor="@color/white"/>
 
-
-
-</LinearLayout>
+</RelativeLayout>

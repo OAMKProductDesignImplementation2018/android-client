@@ -14,7 +14,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +57,8 @@ public class PhotoOptionsFragment extends Fragment {
     private static final int CAMERA_INTENT = 22;
     private static final int GALLERY_INTENT = 23;
 
+    private Button buttonUpload;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.photo_options, parent, false);
@@ -91,7 +95,9 @@ public class PhotoOptionsFragment extends Fragment {
         });
 
         //upload
-        final Button buttonUpload = view.findViewById(R.id.buttonSavePicture);
+        buttonUpload = view.findViewById(R.id.buttonSavePicture);
+        buttonUpload.setAlpha(.5f);
+        buttonUpload.setEnabled(false);
         buttonUpload.setOnClickListener(v -> {
             Thread thread = new Thread(() -> {
 
@@ -107,7 +113,12 @@ public class PhotoOptionsFragment extends Fragment {
                         .build();
 
                 try (Response response = client.newCall(request).execute()) {
-                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                    if (!response.isSuccessful()){
+                        throw new IOException("Unexpected code " + response);
+                    }
+                    else {
+                        buttonUpload.setAlpha(.5f);
+                    }
                     Log.d("PRODU_DEV", response.body().string());
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -162,6 +173,8 @@ public class PhotoOptionsFragment extends Fragment {
                             selectedImagePathRealSize = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
                             cursor.close();
                         }
+                        buttonUpload.setAlpha(1f);
+                        buttonUpload.setEnabled(false);
                     }
                 } // no break here
                 case CAMERA_INTENT: {
