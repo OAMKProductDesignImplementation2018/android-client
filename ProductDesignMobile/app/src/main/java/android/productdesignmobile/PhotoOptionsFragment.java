@@ -14,9 +14,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -94,24 +92,27 @@ public class PhotoOptionsFragment extends Fragment {
                 launchCamera();
         });
 
-        //upload
+        // Remove current photo
+        final Button buttonRemovePicture = view.findViewById(R.id.buttonRemovePicture);
+        buttonRemovePicture.setOnClickListener(v -> {
+            Log.d("buttonRemovePicture", "pressed");
+        });
+
+        // Upload chosen picture
         buttonUpload = view.findViewById(R.id.buttonSavePicture);
         buttonUpload.setAlpha(.5f);
         buttonUpload.setEnabled(false);
         buttonUpload.setOnClickListener(v -> {
             Thread thread = new Thread(() -> {
-
                 MultipartBody requestBody = new MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
                         .addPart(Headers.of("Content-Disposition", "form-data; name=\"image\""),
                                 RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImagePathRealSize)))
                         .build();
-
                 Request request = new Request.Builder()
                         .url("https://facedatabasetest.azurewebsites.net/api/MobileTrigger")
                         .post(requestBody)
                         .build();
-
                 try (Response response = client.newCall(request).execute()) {
                     if (!response.isSuccessful()){
                         throw new IOException("Unexpected code " + response);

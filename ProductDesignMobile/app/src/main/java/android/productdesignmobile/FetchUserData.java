@@ -15,7 +15,6 @@ import java.net.HttpURLConnection;
 
 public class FetchUserData extends AsyncTask<Void, Void, String> {
     Context c;
-    private String urlAddress;
     private String user_id;
     private String first_name;
     private String last_name;
@@ -29,11 +28,13 @@ public class FetchUserData extends AsyncTask<Void, Void, String> {
 
     private UserDataInterface testInterface;
 
+    private String urlAddress="http://productdesign.westeurope.cloudapp.azure.com/android_api/fetch_user_data.php";
+
     public void setTestInterface(UserDataInterface testInterface) {
         this.testInterface = testInterface;
     }
 
-    public FetchUserData(Context c, String urlAddress, String user_id) {
+    public FetchUserData(Context c, String user_id) {
         this.c = c;
         this.urlAddress = urlAddress;
         this.user_id = user_id;

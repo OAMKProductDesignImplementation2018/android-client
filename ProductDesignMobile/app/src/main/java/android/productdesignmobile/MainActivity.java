@@ -13,11 +13,15 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    static SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        session = new SessionManager(getApplicationContext());
+        session.createLoginSession();
 
         // Set HomeFragment as default
         Fragment fragment = null;
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     fragmentClass1 = DisplaySettingsFragment.class;
                     break;
                 case R.id.nav_logout:
+                    session.logoutUser();
                     Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(logoutIntent);
                     finish();

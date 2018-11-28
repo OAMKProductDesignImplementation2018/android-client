@@ -15,7 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.HashMap;
 import java.util.Objects;
+
+import static android.productdesignmobile.MainActivity.session;
 
 public class ProfileSettingsFragment extends android.support.v4.app.Fragment implements View.OnClickListener, UserDataInterface {
 
@@ -31,7 +34,7 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
 
     public Spinner gender_spinner;
 
-    String fetchDataUrlAddress="http://productdesign.westeurope.cloudapp.azure.com/android_api/fetch_user_data.php";
+    //String fetchDataUrlAddress="http://productdesign.westeurope.cloudapp.azure.com/android_api/fetch_user_data.php";
     String updateDataUrlAddress="http://productdesign.westeurope.cloudapp.azure.com/android_api/update_user_data.php";
 
     @Override
@@ -72,9 +75,15 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
         last_name = view.findViewById(R.id.editTextLastName);
         email = view.findViewById(R.id.editTextEmail);
 
+        HashMap<String, String> user = session.getUserDetails();
+        first_name.setText(user.get(SessionManager.KEY_FIRSTNAME));
+        last_name.setText(user.get(SessionManager.KEY_LASTNAME));
+        email.setText(user.get(SessionManager.KEY_EMAIL));
+        /*
         FetchUserData fetchdata = new FetchUserData(getContext(),fetchDataUrlAddress, "1");
         fetchdata.setTestInterface(this);
         fetchdata.execute();
+        */
 
         return view;
     }
@@ -84,21 +93,6 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
         Fragment fragment = null;
         Class fragmentClass;
         switch (v.getId()) {
-            case R.id.buttonDietarySettings:
-                Log.d("Dietary settings", "button clicked");
-                fragmentClass = DietarySettingsFragment.class;
-                try {
-                    fragment = (Fragment) fragmentClass.newInstance();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                FragmentManager fragmentManagerDietarySettings = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-                fragmentManagerDietarySettings.beginTransaction()
-                        .replace(R.id.content_frame, Objects.requireNonNull(fragment))
-                        .addToBackStack(null)
-                        .commit();
-                break;
             case R.id.buttonAddPicture:
                 Log.d("Add picture", "button clicked");
                 fragmentClass = PhotoOptionsFragment.class;
