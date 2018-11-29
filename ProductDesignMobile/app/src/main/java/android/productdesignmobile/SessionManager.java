@@ -3,6 +3,10 @@ package android.productdesignmobile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -15,8 +19,9 @@ public class SessionManager {
     private static final String PREF_NAME = "FaceRekPref";
     private static final String IS_LOGIN = "IsLoggedIn";
 
-    public static final String KEY_FIRSTNAME = "firstname";
-    public static final String KEY_LASTNAME = "lastname";
+    public static final String KEY_USER_ID = "user_id";
+    public static final String KEY_FIRST_NAME = "firstname";
+    public static final String KEY_LAST_NAME = "lastname";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_GENDER = "gender";
 
@@ -36,8 +41,8 @@ public class SessionManager {
     public void createLoginSession() {
         //TODO get userinfo from database
         editor.putBoolean(IS_LOGIN, true);
-        editor.putString(KEY_FIRSTNAME, "Henry");
-        editor.putString(KEY_LASTNAME, "Väisänen");
+        editor.putString(KEY_FIRST_NAME, "Henry");
+        editor.putString(KEY_LAST_NAME, "Väisänen");
         editor.putString(KEY_EMAIL, "t5vahe01@students.oamk.fi");
         editor.putBoolean(KEY_DIETARY_GLUTEN, true);
         editor.putBoolean(KEY_DIETARY_LACTOSEFREE, true);
@@ -65,7 +70,7 @@ public class SessionManager {
 
     public HashMap<String, String> getUserDetails() {
         HashMap<String, String> user = new HashMap<String, String>();
-        user.put(KEY_FIRSTNAME, pref.getString(KEY_FIRSTNAME, null));
+        user.put(KEY_FIRST_NAME, pref.getString(KEY_FIRST_NAME, null));
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
         return user;
     }
@@ -105,11 +110,16 @@ public class SessionManager {
         //_context.startActivity(i);
     }
 
-    /**
-     * Quick check for login
-     **/
-    // Get Login State
     public boolean isLoggedIn() {
         return pref.getBoolean(IS_LOGIN, false);
+    }
+
+    public void buildJSONobject() throws JSONException {
+        JSONObject jo = new JSONObject();
+        jo.accumulate("user_id", pref.getInt(KEY_USER_ID, 0));
+        jo.accumulate("first_name", pref.getString(KEY_FIRST_NAME, null));
+        jo.accumulate("last_name", pref.getString(KEY_LAST_NAME, null));
+        jo.accumulate("email", pref.getString(KEY_EMAIL, null));
+        Log.d("buildJSONobject",jo.toString());
     }
 }

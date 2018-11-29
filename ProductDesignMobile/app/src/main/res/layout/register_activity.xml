@@ -54,7 +54,7 @@
         android:hint="@string/signUpHintPassword"/>
 
     <Button
-        android:id="@+id/signUpButtonSignUp"
+        android:id="@+id/signUpButtonRegister"
         android:background="@drawable/rounded_button"
         android:layout_width="match_parent"
         android:layout_height="40dp"

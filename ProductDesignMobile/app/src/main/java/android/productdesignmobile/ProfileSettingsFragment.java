@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import org.json.JSONException;
+
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -69,15 +71,24 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
         });
         buttonAddPicture = view.findViewById(R.id.buttonAddPicture);
         buttonAddPicture.setOnClickListener(this);
+
         buttonUpdateData = view.findViewById(R.id.buttonUpdateData);
-        buttonUpdateData.setOnClickListener(this);
+        buttonUpdateData.setOnClickListener(v -> {
+            try {
+
+                session.buildJSONobject();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
+
         first_name = view.findViewById(R.id.editTextFirstName);
         last_name = view.findViewById(R.id.editTextLastName);
         email = view.findViewById(R.id.editTextEmail);
 
         HashMap<String, String> user = session.getUserDetails();
-        first_name.setText(user.get(SessionManager.KEY_FIRSTNAME));
-        last_name.setText(user.get(SessionManager.KEY_LASTNAME));
+        first_name.setText(user.get(SessionManager.KEY_FIRST_NAME));
+        last_name.setText(user.get(SessionManager.KEY_LAST_NAME));
         email.setText(user.get(SessionManager.KEY_EMAIL));
         /*
         FetchUserData fetchdata = new FetchUserData(getContext(),fetchDataUrlAddress, "1");
