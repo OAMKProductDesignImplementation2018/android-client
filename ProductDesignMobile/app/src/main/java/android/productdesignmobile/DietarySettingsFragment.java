@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 
 import java.util.HashMap;
 
-import static android.productdesignmobile.MainActivity.session;
+import static android.productdesignmobile.LoginActivity.session;
 
 public class DietarySettingsFragment extends DialogFragment {
 

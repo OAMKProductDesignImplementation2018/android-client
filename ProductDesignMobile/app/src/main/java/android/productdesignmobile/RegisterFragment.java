@@ -10,13 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -44,17 +48,23 @@ public class RegisterFragment extends DialogFragment {
             String ln = last_name.getText().toString();
             String em = email.getText().toString();
             String pw = password.getText().toString();
-            RegisterUser ru = new RegisterUser(getContext(),fn,ln,em,pw);
-            ru.execute();
+            if (!isEmailValid(em)){
+                Toast.makeText(getContext(), "Not valid email", Toast.LENGTH_SHORT).show();
+            } else{
+                RegisterUser ru = new RegisterUser(getContext(),fn,ln,em,pw);
+                ru.execute();
+            }
         });
         return view;
     }
 
-    public class RegisterUser extends AsyncTask<String,Void,String>{
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
 
+    private class RegisterUser extends AsyncTask<String,Void,String>{
         String urlAddress = "https://facedatabasetest.azurewebsites.net/api/CreateUser";
         Context context;
-
         String first_name,last_name,email,password;
 
         public RegisterUser(Context context, String firstname, String lastname, String email, String password){
@@ -67,6 +77,7 @@ public class RegisterFragment extends DialogFragment {
 
         @Override
         protected String doInBackground(String... voids) {
+            Log.d("RegisterUser","Async started");
             try {
                 try {
                 return HttpPost(urlAddress);
@@ -82,6 +93,8 @@ public class RegisterFragment extends DialogFragment {
         @Override
         protected void onPostExecute(String result) {
             Log.d("RegisterUser", "onPostExecute " + result);
+            dismiss();
+            Toast.makeText(context,"User " + this.email + " created succesfully!",Toast.LENGTH_LONG).show();
         }
 
         private String HttpPost(String urlAddress) throws IOException, JSONException {
@@ -92,21 +105,23 @@ public class RegisterFragment extends DialogFragment {
             JSONObject jsonObject = buildJsonObject();
             setPostRequestContent(conn, jsonObject);
             conn.connect();
-
-            /*int responseCode=conn.getResponseCode();
-            if(responseCode==conn.HTTP_OK){
-                BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuffer response=new StringBuffer();
+            int response_code = conn.getResponseCode();
+            Log.d("RegisterUser","response_code: "+ response_code);
+            if (response_code == HttpURLConnection.HTTP_OK) {
+                InputStream input = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                StringBuilder result = new StringBuilder();
                 String line;
-                while ((line=br.readLine()) != null) {
-                    response.append(line);
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
                 }
-                br.close();
-
-                //return response.toString();
-            }*/
-
-            return conn.getResponseMessage()+"";
+                Log.d("'RegisterUser", "Reponse result: " + result.toString());
+                return(result.toString());
+            }
+            else{
+                return("unsuccessful");
+            }
+            //return conn.getResponseMessage()+"";
         }
 
         private JSONObject buildJsonObject() throws JSONException {

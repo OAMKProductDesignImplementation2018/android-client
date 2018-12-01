@@ -19,18 +19,6 @@
         android:textColor="@color/colorPalettonDark"
         android:text="@string/loginTextViewSignUp" />
 
-    <!--
-    <Button
-        android:id="@+id/loginButtonSignUp"
-        android:background="@color/colorPalettonAccent"
-        android:layout_below="@id/loginTextViewSignUp"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/loginButtonSignUp"
-        android:textColor="@color/white"/>
-        -->
-
     <Button
         android:id="@+id/loginButtonLogin"
         android:background="@drawable/rounded_button"
@@ -67,33 +55,7 @@
         android:layout_centerHorizontal="true"
         android:textColor="@color/colorPalettonDark"
         android:hint="@string/loginTextViewUsername"
-        android:inputType="textPersonName" />
-
-    <!--
-    <TextView
-        android:id="@+id/loginTextViewHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:textAlignment="center"
-        android:fontFamily="monospace"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:text="@string/app_name" />
-
-    <TextView
-        android:id="@+id/loginTextViewGuide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/loginTextViewHeader"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:layout_marginTop="10dp"
-        android:text="@string/loginTextViewGuide" />
-        -->
+        android:inputType="textEmailAddress" />
 
     <ImageView
         android:layout_width="100dp"

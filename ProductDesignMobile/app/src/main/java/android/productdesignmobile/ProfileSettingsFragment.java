@@ -20,7 +20,7 @@ import org.json.JSONException;
 import java.util.HashMap;
 import java.util.Objects;
 
-import static android.productdesignmobile.MainActivity.session;
+import static android.productdesignmobile.LoginActivity.session;
 
 public class ProfileSettingsFragment extends android.support.v4.app.Fragment implements View.OnClickListener, UserDataInterface {
 
@@ -85,16 +85,13 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
         first_name = view.findViewById(R.id.editTextFirstName);
         last_name = view.findViewById(R.id.editTextLastName);
         email = view.findViewById(R.id.editTextEmail);
+        email.setFocusable(false);
+        email.setAlpha(.5f);
 
         HashMap<String, String> user = session.getUserDetails();
         first_name.setText(user.get(SessionManager.KEY_FIRST_NAME));
         last_name.setText(user.get(SessionManager.KEY_LAST_NAME));
         email.setText(user.get(SessionManager.KEY_EMAIL));
-        /*
-        FetchUserData fetchdata = new FetchUserData(getContext(),fetchDataUrlAddress, "1");
-        fetchdata.setTestInterface(this);
-        fetchdata.execute();
-        */
 
         return view;
     }

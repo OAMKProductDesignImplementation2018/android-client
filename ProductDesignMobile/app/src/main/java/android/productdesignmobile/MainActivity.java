@@ -10,18 +10,19 @@ import android.os.Bundle;
 
 import java.util.Objects;
 
+import static android.productdesignmobile.LoginActivity.session;
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
-    static SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        session = new SessionManager(getApplicationContext());
-        session.createLoginSession();
+        //session = new SessionManager(getApplicationContext());
+        //session.createLoginSession();
 
         // Set HomeFragment as default
         Fragment fragment = null;

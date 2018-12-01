@@ -38,12 +38,12 @@ public class SessionManager {
         editor = pref.edit();
     }
 
-    public void createLoginSession() {
-        //TODO get userinfo from database
+    public void createLoginSession(JSONObject jo) throws JSONException {
         editor.putBoolean(IS_LOGIN, true);
-        editor.putString(KEY_FIRST_NAME, "Henry");
-        editor.putString(KEY_LAST_NAME, "Väisänen");
-        editor.putString(KEY_EMAIL, "t5vahe01@students.oamk.fi");
+        editor.putString(KEY_USER_ID, jo.getString("ID"));
+        editor.putString(KEY_FIRST_NAME, jo.getString("FirstName"));
+        editor.putString(KEY_LAST_NAME, jo.getString("LastName"));
+        editor.putString(KEY_EMAIL, jo.getString("Email"));
         editor.putBoolean(KEY_DIETARY_GLUTEN, true);
         editor.putBoolean(KEY_DIETARY_LACTOSEFREE, true);
         editor.putBoolean(KEY_DIETARY_LOWLACTOSE, true);
@@ -71,6 +71,7 @@ public class SessionManager {
     public HashMap<String, String> getUserDetails() {
         HashMap<String, String> user = new HashMap<String, String>();
         user.put(KEY_FIRST_NAME, pref.getString(KEY_FIRST_NAME, null));
+        user.put(KEY_LAST_NAME, pref.getString(KEY_LAST_NAME, null));
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
         return user;
     }
@@ -97,17 +98,6 @@ public class SessionManager {
     public void logoutUser() {
         editor.clear();
         editor.commit();
-
-        // After logout redirect user to Loing Activity
-        //Intent i = new Intent(_context, LoginActivity.class);
-        // Closing all the Activities
-        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        // Add new Flag to start new Activity
-        //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        // Staring Login Activity
-        //_context.startActivity(i);
     }
 
     public boolean isLoggedIn() {
