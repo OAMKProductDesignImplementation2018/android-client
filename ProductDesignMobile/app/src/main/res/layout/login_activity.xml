@@ -19,6 +19,15 @@
         android:textColor="@color/colorPalettonDark"
         android:text="@string/loginTextViewSignUp" />
 
+    <TextView
+        android:id="@+id/loginTextViewStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginTextViewSignUp"
+        android:layout_marginTop="50dp"
+        android:textAlignment="center"
+        android:text=""/>
+
     <Button
         android:id="@+id/loginButtonLogin"
         android:background="@drawable/rounded_button"

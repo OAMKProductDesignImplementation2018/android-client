@@ -16,13 +16,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Objects;
 
 import static android.productdesignmobile.LoginActivity.session;
 
-public class ProfileSettingsFragment extends android.support.v4.app.Fragment implements View.OnClickListener, UserDataInterface {
+public class ProfileSettingsFragment extends android.support.v4.app.Fragment {
 
     private Button buttonDietarySettings;
     private Button buttonAddPicture;
@@ -36,8 +37,7 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
 
     public Spinner gender_spinner;
 
-    //String fetchDataUrlAddress="http://productdesign.westeurope.cloudapp.azure.com/android_api/fetch_user_data.php";
-    String updateDataUrlAddress="http://productdesign.westeurope.cloudapp.azure.com/android_api/update_user_data.php";
+    //String updateDataUrlAddress="http://productdesign.westeurope.cloudapp.azure.com/android_api/update_user_data.php";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -58,6 +58,7 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
         //language_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         //language_spinner.setAdapter(language_adapter);
 
+        // Open dietary settings dialogfragment
         buttonDietarySettings = view.findViewById(R.id.buttonDietarySettings);
         buttonDietarySettings.setOnClickListener(v -> {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -69,79 +70,54 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
             DialogFragment dialogFragment = new DietarySettingsFragment();
             dialogFragment.show(ft, "dialog");
         });
+
+        //Open PhotoOptionsFragment
         buttonAddPicture = view.findViewById(R.id.buttonAddPicture);
-        buttonAddPicture.setOnClickListener(this);
-
-        buttonUpdateData = view.findViewById(R.id.buttonUpdateData);
-        buttonUpdateData.setOnClickListener(v -> {
+        buttonAddPicture.setOnClickListener(v -> {
+            Fragment fragment = null;
+            Class fragmentClass = PhotoOptionsFragment.class;
             try {
-
-                session.buildJSONobject();
-            } catch (JSONException e) {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+            FragmentManager fragmentManagerAddPicture = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+            fragmentManagerAddPicture.beginTransaction()
+                    .replace(R.id.content_frame, Objects.requireNonNull(fragment))
+                    .addToBackStack(null)
+                    .commit();
         });
 
+        // init
         first_name = view.findViewById(R.id.editTextFirstName);
         last_name = view.findViewById(R.id.editTextLastName);
         email = view.findViewById(R.id.editTextEmail);
         email.setFocusable(false);
         email.setAlpha(.5f);
 
+        // Set current session's userdata
         HashMap<String, String> user = session.getUserDetails();
-        first_name.setText(user.get(SessionManager.KEY_FIRST_NAME));
         last_name.setText(user.get(SessionManager.KEY_LAST_NAME));
         email.setText(user.get(SessionManager.KEY_EMAIL));
 
+
+        // Update userdata
+        buttonUpdateData = view.findViewById(R.id.buttonUpdateData);
+        buttonUpdateData.setOnClickListener(v -> {
+            //todo update data to session
+            //todo update data to database
+            //todo disable button until user makes some changes to data
+            try {
+                JSONObject jo = new JSONObject();
+                jo.accumulate("first_name", first_name.getText().toString());
+                jo.accumulate("last_name", last_name.getText().toString());
+                jo.accumulate("gender", gender_spinner.getSelectedItemPosition());
+                session.setUserDetails(jo);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
+
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-        Fragment fragment = null;
-        Class fragmentClass;
-        switch (v.getId()) {
-            case R.id.buttonAddPicture:
-                Log.d("Add picture", "button clicked");
-                fragmentClass = PhotoOptionsFragment.class;
-                try {
-                    fragment = (Fragment) fragmentClass.newInstance();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                FragmentManager fragmentManagerAddPicture = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-                fragmentManagerAddPicture.beginTransaction()
-                        .replace(R.id.content_frame, Objects.requireNonNull(fragment))
-                        .addToBackStack(null)
-                        .commit();
-                break;
-            case R.id.buttonUpdateData:
-                Log.d("Update data", "button clicked");
-                setGender();
-                UpdateUserData updatedata = new UpdateUserData(getContext(), updateDataUrlAddress, gender, first_name, last_name, email);
-                updatedata.execute();
-                break;
-        }
-    }
-
-    private void setGender() {
-        int temp = gender_spinner.getSelectedItemPosition();
-        Log.d("Gender spinner", "Get selected item position" + temp);
-        if (temp == 0){
-            Log.d("Set gender", "female");
-            gender = 1;
-        }
-        else {
-            Log.d("Set gender", "male");
-            gender = 2;
-        }
-    }
-
-    @Override
-    public void setUserData(String firstname, String lastname, String email, int gender) {
-        this.first_name.setText(firstname);
-        this.last_name.setText(lastname);
-        this.email.setText(email);
-        gender_spinner.setSelection(gender - 1);
     }
 }

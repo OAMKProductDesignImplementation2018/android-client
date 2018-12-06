@@ -34,8 +34,10 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
     public static SessionManager session;
 
-    public static final int CONNECTION_TIMEOUT=10000;
-    public static final int READ_TIMEOUT=15000;
+    //public static final int CONNECTION_TIMEOUT=10000;
+    //public static final int READ_TIMEOUT=15000;
+
+    private TextView status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
         EditText username = findViewById(R.id.loginEditTextUsername);
         EditText password = findViewById(R.id.loginEditTextPassword);
+        status = findViewById(R.id.loginTextViewStatus);
 
         Button login_button = findViewById(R.id.loginButtonLogin);
         login_button.setOnClickListener(v -> {
@@ -96,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             if (!result.equals("{}")) {
                 try {
+                    status.setText(R.string.loginStatusRetrievingUserData);
                     JSONObject json = new JSONObject(result);
                     String temp = json.getString("userData");
                     JSONObject result_json = new JSONObject(temp);
@@ -108,7 +112,8 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             } else {
-                Toast.makeText(context, "Wrong email or password", Toast.LENGTH_SHORT).show();
+                status.setText(R.string.loginStatusWrongCredentials);
+                Toast.makeText(context, "Wrong username/email or password", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -118,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         private String HttpPost(String urlAddress) throws IOException, JSONException {
+            status.setText(R.string.loginStatusConnecting);
             URL url = new URL(urlAddress);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
@@ -136,9 +142,11 @@ public class LoginActivity extends AppCompatActivity {
                     result.append(line);
                 }
                 Log.d("LoginUser", "Reponse result: " + result.toString());
+                status.setText(R.string.loginStatusConnectionSuccessful);
                 return(result.toString());
             }
             else{
+                status.setText(R.string.loginStatusConnectionFailed);
                 return("unsuccessful");
             }
             //return conn.getResponseMessage()+"";
@@ -167,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    private class AsyncLogin extends AsyncTask<String, String, String>
+    /*private class AsyncLogin extends AsyncTask<String, String, String>
     {
         HttpURLConnection conn;
         URL url = null;
@@ -246,5 +254,5 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Connection Problem.", Toast.LENGTH_LONG).show();
             }
         }
-    }
+    }*/
 }

@@ -7,6 +7,11 @@
     <string name="loginTextViewUsername">Username</string>
     <string name="loginTextViewSignUp">Register here.</string>
     <string name="loginButtonSignUp">Sign up</string>
+    <string name="loginStatusConnecting">Connecting to database</string>
+    <string name="loginStatusConnectionSuccessful">Connection successful</string>
+    <string name="loginStatusConnectionFailed">Connection failed</string>
+    <string name="loginStatusRetrievingUserData">Retrieving user data</string>
+    <string name="loginStatusWrongCredentials">Wrong username/email or password</string>
 
     <string name="signUpTextViewHeader">Sign Up</string>
     <string name="signUpHintFirstName">First name</string>

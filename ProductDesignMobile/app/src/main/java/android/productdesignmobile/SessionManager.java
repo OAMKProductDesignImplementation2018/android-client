@@ -40,7 +40,7 @@ public class SessionManager {
 
     public void createLoginSession(JSONObject jo) throws JSONException {
         editor.putBoolean(IS_LOGIN, true);
-        editor.putString(KEY_USER_ID, jo.getString("ID"));
+        editor.putInt(KEY_USER_ID, jo.getInt("ID"));
         editor.putString(KEY_FIRST_NAME, jo.getString("FirstName"));
         editor.putString(KEY_LAST_NAME, jo.getString("LastName"));
         editor.putString(KEY_EMAIL, jo.getString("Email"));
@@ -68,12 +68,25 @@ public class SessionManager {
         }
     }
 
+    public int getUserID(){
+        int user_id = pref.getInt(KEY_USER_ID, 0);
+        return user_id;
+    }
+
     public HashMap<String, String> getUserDetails() {
         HashMap<String, String> user = new HashMap<String, String>();
         user.put(KEY_FIRST_NAME, pref.getString(KEY_FIRST_NAME, null));
         user.put(KEY_LAST_NAME, pref.getString(KEY_LAST_NAME, null));
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
         return user;
+    }
+
+    public void setUserDetails(JSONObject jsonObject) throws JSONException{
+        Log.d("SessionManger", "setUserDetails JsonObject" + jsonObject.toString());
+        editor.putString(KEY_FIRST_NAME, jsonObject.getString("first_name"));
+        editor.putString(KEY_LAST_NAME, jsonObject.getString("last_name"));
+        if (jsonObject.get("gender") == "0") editor.putString(KEY_GENDER, "female");
+        if (jsonObject.get("gender") == "1") editor.putString(KEY_GENDER, "male");
     }
 
     public HashMap<String, Boolean> getDietaryDetails() {
