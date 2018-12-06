@@ -39,6 +39,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static android.productdesignmobile.LoginActivity.session;
+
 public class PhotoOptionsFragment extends Fragment {
 
     // Imageview to show the thumbnail of your profile picture
@@ -104,21 +106,31 @@ public class PhotoOptionsFragment extends Fragment {
         buttonUpload.setEnabled(false);
         buttonUpload.setOnClickListener(v -> {
             Thread thread = new Thread(() -> {
+                String user_id = Integer.toString(session.getUserID());
                 MultipartBody requestBody = new MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
                         .addPart(Headers.of("Content-Disposition", "form-data; name=\"image\""),
                                 RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImagePathRealSize)))
                         .build();
                 Request request = new Request.Builder()
-                        .url("https://facedatabasetest.azurewebsites.net/api/MobileTrigger")
+                        .addHeader("user_id", user_id)
+                        .header("user_id", user_id)
+                        .url("https://facedatabasetest.azurewebsites.net/api/MobileImageHandler")
                         .post(requestBody)
                         .build();
+                Log.d("PRODU_DEV", "headers: " + request.headers().toString());
                 try (Response response = client.newCall(request).execute()) {
                     if (!response.isSuccessful()){
                         throw new IOException("Unexpected code " + response);
                     }
                     else {
-                        buttonUpload.setAlpha(.5f);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                buttonUpload.setEnabled(false);
+                                buttonUpload.setAlpha(.5f);
+                            }
+                        });
                     }
                     Log.d("PRODU_DEV", response.body().string());
                 } catch (IOException e) {
@@ -164,8 +176,9 @@ public class PhotoOptionsFragment extends Fragment {
             switch (requestCode) {
                 case GALLERY_INTENT: {
                     if (data.getData() != null && getActivity() != null) {
+                        buttonUpload.setEnabled(true);
+                        buttonUpload.setAlpha(1f);
                         String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
                         // Get path to the chosen picture
                         Cursor cursor = getActivity().getContentResolver().query(data.getData(), filePathColumn, null, null, null);
                         if (cursor != null)
@@ -179,6 +192,8 @@ public class PhotoOptionsFragment extends Fragment {
                     }
                 } // no break here
                 case CAMERA_INTENT: {
+                    buttonUpload.setEnabled(true);
+                    buttonUpload.setAlpha(1f);
                     // Create a thumbnail of the picture
                     Bitmap bitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(selectedImagePathRealSize), THUMB_SIZE, THUMB_SIZE);
                     selectedImageThumbnail.setImageBitmap(bitmap);

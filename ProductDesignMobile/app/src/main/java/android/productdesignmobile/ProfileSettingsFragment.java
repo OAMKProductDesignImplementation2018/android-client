@@ -22,7 +22,7 @@ import java.util.Objects;
 
 import static android.productdesignmobile.LoginActivity.session;
 
-public class ProfileSettingsFragment extends android.support.v4.app.Fragment implements View.OnClickListener, UserDataInterface {
+public class ProfileSettingsFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     private Button buttonDietarySettings;
     private Button buttonAddPicture;
@@ -34,7 +34,7 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
 
     public int gender;
 
-    public Spinner gender_spinner;
+    //public Spinner gender_spinner;
 
     //String fetchDataUrlAddress="http://productdesign.westeurope.cloudapp.azure.com/android_api/fetch_user_data.php";
     String updateDataUrlAddress="http://productdesign.westeurope.cloudapp.azure.com/android_api/update_user_data.php";
@@ -44,12 +44,13 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_settings, container, false);
 
+        /*
         // Dropdown menu for gender
         String[] gender_array = getResources().getStringArray(R.array.gender_array);
         gender_spinner = view.findViewById(R.id.gender_spinner);
         ArrayAdapter<String> gender_adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), R.layout.spinner_item, gender_array);
         gender_adapter.setDropDownViewResource(R.layout.spinner_item);
-        gender_spinner.setAdapter(gender_adapter);
+        gender_spinner.setAdapter(gender_adapter);*/
 
         //Dropdown menu for language
         //String[] language_array = getResources().getStringArray(R.array.language_array);
@@ -73,6 +74,8 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
         buttonAddPicture.setOnClickListener(this);
 
         buttonUpdateData = view.findViewById(R.id.buttonUpdateData);
+        buttonUpdateData.setEnabled(false);
+        buttonUpdateData.setAlpha(.5f);
         buttonUpdateData.setOnClickListener(v -> {
             try {
 
@@ -83,7 +86,11 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
         });
 
         first_name = view.findViewById(R.id.editTextFirstName);
+        first_name.setFocusable(false);
+        first_name.setAlpha(.5f);
         last_name = view.findViewById(R.id.editTextLastName);
+        last_name.setFocusable(false);
+        last_name.setAlpha(.5f);
         email = view.findViewById(R.id.editTextEmail);
         email.setFocusable(false);
         email.setAlpha(.5f);
@@ -116,15 +123,14 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
                         .commit();
                 break;
             case R.id.buttonUpdateData:
-                Log.d("Update data", "button clicked");
-                setGender();
+                /*Log.d("Update data", "button clicked");
                 UpdateUserData updatedata = new UpdateUserData(getContext(), updateDataUrlAddress, gender, first_name, last_name, email);
-                updatedata.execute();
+                updatedata.execute();*/
                 break;
         }
     }
 
-    private void setGender() {
+    /*private void setGender() {
         int temp = gender_spinner.getSelectedItemPosition();
         Log.d("Gender spinner", "Get selected item position" + temp);
         if (temp == 0){
@@ -135,13 +141,5 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment imp
             Log.d("Set gender", "male");
             gender = 2;
         }
-    }
-
-    @Override
-    public void setUserData(String firstname, String lastname, String email, int gender) {
-        this.first_name.setText(firstname);
-        this.last_name.setText(lastname);
-        this.email.setText(email);
-        gender_spinner.setSelection(gender - 1);
-    }
+    }*/
 }

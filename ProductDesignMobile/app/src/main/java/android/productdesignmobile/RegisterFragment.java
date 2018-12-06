@@ -115,7 +115,7 @@ public class RegisterFragment extends DialogFragment {
                 while ((line = reader.readLine()) != null) {
                     result.append(line);
                 }
-                Log.d("'RegisterUser", "Reponse result: " + result.toString());
+                Log.d("'RegisterUser", "Response result: " + result.toString());
                 return(result.toString());
             }
             else{
