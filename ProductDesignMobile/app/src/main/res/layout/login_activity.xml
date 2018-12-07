@@ -26,6 +26,7 @@
         android:layout_below="@id/loginTextViewSignUp"
         android:layout_marginTop="50dp"
         android:textAlignment="center"
+        android:textColor="@color/colorPalettonDark"
         android:text=""/>
 
     <Button

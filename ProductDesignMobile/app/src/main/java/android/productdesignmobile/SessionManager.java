@@ -40,10 +40,10 @@ public class SessionManager {
 
     public void createLoginSession(JSONObject jo) throws JSONException {
         editor.putBoolean(IS_LOGIN, true);
-        editor.putInt(KEY_USER_ID, jo.getInt("ID"));
-        editor.putString(KEY_FIRST_NAME, jo.getString("FirstName"));
-        editor.putString(KEY_LAST_NAME, jo.getString("LastName"));
-        editor.putString(KEY_EMAIL, jo.getString("Email"));
+        editor.putInt(KEY_USER_ID, jo.getInt("id"));
+        editor.putString(KEY_FIRST_NAME, jo.getString("firstname"));
+        editor.putString(KEY_LAST_NAME, jo.getString("lastname"));
+        editor.putString(KEY_EMAIL, jo.getString("email"));
         editor.putBoolean(KEY_DIETARY_GLUTEN, true);
         editor.putBoolean(KEY_DIETARY_LACTOSEFREE, true);
         editor.putBoolean(KEY_DIETARY_LOWLACTOSE, true);

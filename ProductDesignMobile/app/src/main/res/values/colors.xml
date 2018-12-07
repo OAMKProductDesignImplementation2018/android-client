@@ -14,4 +14,6 @@
     <color name="colorPalettonAccent">#FF786A</color>
     <color name="colorPalettonDark">#3d5459</color>
     <color name="colorPalettonLight">#fafcfc</color>
+
+    <color name="colorGreen">#00FF00</color>
 </resources>
