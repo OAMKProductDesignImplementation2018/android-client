@@ -48,7 +48,7 @@ public class PhotoOptionsFragment extends Fragment {
     // Path to the picture
     private String selectedImagePathRealSize;
 
-    private final OkHttpClient client = new OkHttpClient();
+    //private final OkHttpClient client = new OkHttpClient();
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png; boundary");
 
     private static final int CAMERA_PERMISSION = 20;
@@ -105,8 +105,12 @@ public class PhotoOptionsFragment extends Fragment {
         buttonUpload.setAlpha(.5f);
         buttonUpload.setEnabled(false);
         buttonUpload.setOnClickListener(v -> {
+            buttonUpload.setEnabled(false);
+            buttonUpload.setAlpha(.5f);
+            buttonUpload.setText("Uploading picture...");
             Thread thread = new Thread(() -> {
                 String user_id = Integer.toString(session.getUserID());
+                OkHttpClient client = new OkHttpClient();
                 MultipartBody requestBody = new MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
                         .addPart(Headers.of("Content-Disposition", "form-data; name=\"image\""),
@@ -121,14 +125,17 @@ public class PhotoOptionsFragment extends Fragment {
                 Log.d("PRODU_DEV", "headers: " + request.headers().toString());
                 try (Response response = client.newCall(request).execute()) {
                     if (!response.isSuccessful()){
+                        Toast.makeText(getActivity(), "Picture upload failed.", Toast.LENGTH_SHORT).show();
                         throw new IOException("Unexpected code " + response);
                     }
                     else {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                buttonUpload.setEnabled(false);
-                                buttonUpload.setAlpha(.5f);
+                                buttonUpload.setEnabled(true);
+                                buttonUpload.setAlpha(1f);
+                                buttonUpload.setText(R.string.pictureSaveButton);
+                                Toast.makeText(getActivity(), "Picture uploaded successfully!", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
