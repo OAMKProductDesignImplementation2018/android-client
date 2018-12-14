@@ -1,15 +1,12 @@
 package android.productdesignmobile;
 
-import android.content.Context;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
-import android.se.omapi.Session;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,11 +78,9 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment {
         // Update userdata
         buttonUpdateData = view.findViewById(R.id.buttonUpdateData);
         buttonUpdateData.setOnClickListener(v -> {
-            //todo update data to session
-            //todo update data to database
-            //todo disable button until user makes some changes to data
+            buttonUpdateData.setEnabled(false);
+            buttonUpdateData.setAlpha(.5f);
             try {
-                Log.d("gender_spinner", "itemsposition " + gender_spinner.getSelectedItemPosition());
                 JSONObject jo = new JSONObject();
                 jo.accumulate("first_name", first_name.getText().toString());
                 jo.accumulate("last_name", last_name.getText().toString());
@@ -98,7 +94,13 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment {
             try {
                 UpdateUserData uud = new UpdateUserData(getContext());
                 uud.execute();
+                buttonUpdateData.setEnabled(true);
+                buttonUpdateData.setAlpha(1f);
+                Toast.makeText(getActivity(), "Profile settings updated!", Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
+                buttonUpdateData.setEnabled(true);
+                buttonUpdateData.setAlpha(1f);
+                Toast.makeText(getActivity(), "Profile settings update failed.", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         });
@@ -120,8 +122,6 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment {
         int gender;
         if (user.get(SessionManager.KEY_GENDER).equals("F")) {gender = 0;} else {gender = 1;}
         gender_spinner.setSelection(gender);
-
-
         return view;
     }
 }

@@ -47,10 +47,20 @@
         android:textColor="@color/colorPalettonDark"/>
 
     <CheckBox
-        android:id="@+id/checkBoxVegan"
+        android:id="@+id/checkBoxFeelWell"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/checkBoxMilkless"
+        android:layout_marginTop="15dp"
+        android:layoutDirection="rtl"
+        android:text="@string/profileDietaryFeelWell"
+        android:textColor="@color/colorPalettonDark"/>
+
+    <CheckBox
+        android:id="@+id/checkBoxVegan"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/checkBoxFeelWell"
         android:layout_marginTop="15dp"
         android:layoutDirection="rtl"
         android:text="@string/profileDietaryVegan"

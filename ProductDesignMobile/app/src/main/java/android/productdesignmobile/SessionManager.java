@@ -32,6 +32,7 @@ public class SessionManager {
     public static final String KEY_DIETARY_LACTOSEFREE = "lactosefree";
     public static final String KEY_DIETARY_LOWLACTOSE = "lowlactose";
     public static final String KEY_DIETARY_MILKLESS = "milkless";
+    public static final String KEY_FEEL_WELL = "feel_well";
     public static final String KEY_DIETARY_VEGAN = "vegan";
     public static final String KEY_DIETARY_GARLIC = "garlic";
     public static final String KEY_DIETARY_ALLERGEN = "allergen";
@@ -52,13 +53,14 @@ public class SessionManager {
         editor.putString(KEY_GENDER, user_json.getString("gender"));
         editor.putString(KEY_IMAGE_URL, user_json.getString("imageurl"));
         //editor.putInt(KEY_RESTAURANT_ID, user_json.getInt("restaurantid"));
-        editor.putBoolean(KEY_DIETARY_GLUTEN, true);
-        editor.putBoolean(KEY_DIETARY_LACTOSEFREE, true);
-        editor.putBoolean(KEY_DIETARY_LOWLACTOSE, true);
-        editor.putBoolean(KEY_DIETARY_MILKLESS, true);
-        editor.putBoolean(KEY_DIETARY_VEGAN, true);
-        editor.putBoolean(KEY_DIETARY_GARLIC, true);
-        editor.putBoolean(KEY_DIETARY_ALLERGEN, true);
+        editor.putBoolean(KEY_DIETARY_GLUTEN, dietary_json.getBoolean("G"));
+        editor.putBoolean(KEY_DIETARY_LACTOSEFREE, dietary_json.getBoolean("L"));
+        editor.putBoolean(KEY_DIETARY_LOWLACTOSE, dietary_json.getBoolean("VL"));
+        editor.putBoolean(KEY_DIETARY_MILKLESS, dietary_json.getBoolean("M"));
+        editor.putBoolean(KEY_FEEL_WELL, dietary_json.getBoolean("VH"));
+        editor.putBoolean(KEY_DIETARY_VEGAN, dietary_json.getBoolean("VEG"));
+        editor.putBoolean(KEY_DIETARY_GARLIC, dietary_json.getBoolean("VS"));
+        editor.putBoolean(KEY_DIETARY_ALLERGEN, dietary_json.getBoolean("A"));
         editor.commit();
     }
 
@@ -96,7 +98,7 @@ public class SessionManager {
         json.accumulate("l", parseBoolean(pref.getBoolean(KEY_DIETARY_LACTOSEFREE, false)));
         json.accumulate("vl", parseBoolean(pref.getBoolean(KEY_DIETARY_LOWLACTOSE, false)));
         json.accumulate("m", parseBoolean(pref.getBoolean(KEY_DIETARY_MILKLESS, false)));
-        json.accumulate("vh", parseBoolean(pref.getBoolean(KEY_DIETARY_MILKLESS, false)));
+        json.accumulate("vh", parseBoolean(pref.getBoolean(KEY_FEEL_WELL, false)));
         json.accumulate("veg", parseBoolean(pref.getBoolean(KEY_DIETARY_VEGAN, false)));
         json.accumulate("vs", parseBoolean(pref.getBoolean(KEY_DIETARY_GARLIC, false)));
         json.accumulate("a", parseBoolean(pref.getBoolean(KEY_DIETARY_ALLERGEN, false)));
@@ -144,6 +146,7 @@ public class SessionManager {
         dietary.put(KEY_DIETARY_LACTOSEFREE, pref.getBoolean(KEY_DIETARY_LACTOSEFREE, false));
         dietary.put(KEY_DIETARY_LOWLACTOSE, pref.getBoolean(KEY_DIETARY_LOWLACTOSE, false));
         dietary.put(KEY_DIETARY_MILKLESS, pref.getBoolean(KEY_DIETARY_MILKLESS, false));
+        dietary.put(KEY_FEEL_WELL, pref.getBoolean(KEY_FEEL_WELL, false));
         dietary.put(KEY_DIETARY_VEGAN, pref.getBoolean(KEY_DIETARY_VEGAN, false));
         dietary.put(KEY_DIETARY_GARLIC, pref.getBoolean(KEY_DIETARY_GARLIC, false));
         dietary.put(KEY_DIETARY_ALLERGEN, pref.getBoolean(KEY_DIETARY_ALLERGEN, false));
@@ -155,6 +158,7 @@ public class SessionManager {
         editor.putBoolean(KEY_DIETARY_LACTOSEFREE, dietary.get("lactosefree"));
         editor.putBoolean(KEY_DIETARY_LOWLACTOSE, dietary.get("lowlactose"));
         editor.putBoolean(KEY_DIETARY_MILKLESS, dietary.get("milkless"));
+        editor.putBoolean(KEY_FEEL_WELL, dietary.get("feel_well"));
         editor.putBoolean(KEY_DIETARY_VEGAN, dietary.get("vegan"));
         editor.putBoolean(KEY_DIETARY_GARLIC, dietary.get("garlic"));
         editor.putBoolean(KEY_DIETARY_ALLERGEN, dietary.get("allergen"));

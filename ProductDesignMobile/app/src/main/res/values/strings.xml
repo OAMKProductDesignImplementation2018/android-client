@@ -43,6 +43,7 @@
     <string name="profileDietaryGlutenFree">Gluten Free</string>
     <string name="profileDietaryVegan">Vegan</string>
     <string name="profileDietaryMilkless">Milkless</string>
+    <string name="profileDietaryFeelWell">Feel Well</string>
     <string name="profileDietaryLactoseFree">Lactose Free</string>
     <string name="profileDietaryLowLactose">Low Lactose</string>
     <string name="profileDietaryGarlic">Includes garlic</string>
