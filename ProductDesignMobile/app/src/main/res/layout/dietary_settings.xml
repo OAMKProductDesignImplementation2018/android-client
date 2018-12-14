@@ -12,6 +12,7 @@
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="15dp"
+        android:layoutDirection="rtl"
         android:text="@string/profileDietaryGlutenFree"
         android:textColor="@color/colorPalettonDark"/>
 
@@ -21,6 +22,7 @@
         android:layout_height="40dp"
         android:layout_below="@id/checkBoxGlutenFree"
         android:layout_marginTop="15dp"
+        android:layoutDirection="rtl"
         android:text="@string/profileDietaryLactoseFree"
         android:textColor="@color/colorPalettonDark"/>
 
@@ -30,6 +32,7 @@
         android:layout_height="40dp"
         android:layout_below="@id/checkBoxLactoseFree"
         android:layout_marginTop="15dp"
+        android:layoutDirection="rtl"
         android:text="@string/profileDietaryLowLactose"
         android:textColor="@color/colorPalettonDark"/>
 
@@ -39,6 +42,7 @@
         android:layout_height="40dp"
         android:layout_below="@id/checkBoxLowLactose"
         android:layout_marginTop="15dp"
+        android:layoutDirection="rtl"
         android:text="@string/profileDietaryMilkless"
         android:textColor="@color/colorPalettonDark"/>
 
@@ -48,7 +52,28 @@
         android:layout_height="40dp"
         android:layout_below="@id/checkBoxMilkless"
         android:layout_marginTop="15dp"
+        android:layoutDirection="rtl"
         android:text="@string/profileDietaryVegan"
+        android:textColor="@color/colorPalettonDark"/>
+
+    <CheckBox
+        android:id="@+id/checkBoxGarlic"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/checkBoxVegan"
+        android:layout_marginTop="15dp"
+        android:layoutDirection="rtl"
+        android:text="@string/profileDietaryGarlic"
+        android:textColor="@color/colorPalettonDark"/>
+
+    <CheckBox
+        android:id="@+id/checkBoxAllergen"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/checkBoxGarlic"
+        android:layout_marginTop="15dp"
+        android:layoutDirection="rtl"
+        android:text="@string/profileDietaryAllergen"
         android:textColor="@color/colorPalettonDark"/>
 
     <Button
@@ -56,7 +81,7 @@
         android:background="@drawable/rounded_button"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_below="@id/checkBoxVegan"
+        android:layout_below="@id/checkBoxAllergen"
         android:layout_marginVertical="15dp"
         android:layout_centerHorizontal="true"
         android:paddingHorizontal="10dp"

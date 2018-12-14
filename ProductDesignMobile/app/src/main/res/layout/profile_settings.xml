@@ -39,95 +39,123 @@
             android:textColor="@color/white"
             android:text="@string/profileSettingsHeader"/>
 
-        <TextView
-            android:id="@+id/textViewFirstName"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/profileTextViewHeader"
-            android:layout_marginTop="10dp"
-            android:textSize="15sp"
-            android:textColor="@color/colorPalettonDark"
-            android:text="@string/profileFirstName" />
-
-        <EditText
-            android:id="@+id/editTextFirstName"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/textViewFirstName"
-            android:background="@drawable/rounded_edittext"
-            android:textColor="@color/colorPalettonDark"
-            android:textSize="15sp"
-            android:inputType="textPersonName"
-            android:paddingHorizontal="10sp"
-            android:autofillHints="firstname"
-            android:hint="@string/profileFirstName"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/textViewLastName"
+            android:layout_below="@+id/profileTextViewHeader"
+            android:layout_above="@+id/buttonAddPicture">
+        <LinearLayout
+            android:id="@+id/profileLinearLayoutContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/editTextFirstName"
-            android:layout_marginTop="10dp"
-            android:textSize="15sp"
-            android:textColor="@color/colorPalettonDark"
-            android:text="@string/profileLastName" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextLastName"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/textViewLastName"
-            android:background="@drawable/rounded_edittext"
-            android:textColor="@color/colorPalettonDark"
-            android:textSize="15sp"
-            android:inputType="textPersonName"
-            android:autofillHints="lastname"
-            android:hint="@string/profileLastName"
-            android:paddingHorizontal="10dp"
-            android:text="" />
+            <TextView
+                android:id="@+id/textViewFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/colorPalettonDark"
+                android:text="@string/profileFirstName" />
 
-        <TextView
-            android:id="@+id/textViewEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/editTextLastName"
-            android:textSize="15sp"
-            android:textColor="@color/colorPalettonDark"
-            android:layout_marginTop="10dp"
-            android:text="@string/profileEmail" />
+            <EditText
+                android:id="@+id/editTextFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_edittext"
+                android:textColor="@color/colorPalettonDark"
+                android:textSize="15sp"
+                android:inputType="textPersonName"
+                android:paddingHorizontal="10sp"
+                android:autofillHints="firstname"
+                android:hint="@string/profileFirstName"
+                android:text="" />
 
-        <EditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/textViewEmail"
-            android:background="@drawable/rounded_edittext"
-            android:textColor="@color/colorPalettonDark"
-            android:textSize="15sp"
-            android:inputType="textEmailAddress"
-            android:autofillHints="email"
-            android:hint="@string/profileEmail"
-            android:paddingHorizontal="10dp"
-            android:text="" />
+            <TextView
+                android:id="@+id/textViewLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/colorPalettonDark"
+                android:text="@string/profileLastName" />
 
-        <TextView
-            android:id="@+id/textViewGender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/editTextEmail"
-            android:textSize="15sp"
-            android:textColor="@color/colorPalettonDark"
-            android:layout_marginTop="10dp"
-            android:text="@string/profileGender" />
+            <EditText
+                android:id="@+id/editTextLastName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_edittext"
+                android:textColor="@color/colorPalettonDark"
+                android:textSize="15sp"
+                android:inputType="textPersonName"
+                android:autofillHints="lastname"
+                android:hint="@string/profileLastName"
+                android:paddingHorizontal="10dp"
+                android:text="" />
 
-        <!-- <Spinner
-            android:id="@+id/gender_spinner"
-            android:background="@drawable/rounded_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/textViewGender"
-            android:layout_marginTop="5sp"/> -->
+            <TextView
+                android:id="@+id/textViewEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/colorPalettonDark"
+                android:layout_marginTop="10dp"
+                android:text="@string/profileEmail" />
+
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_edittext"
+                android:textColor="@color/colorPalettonDark"
+                android:textSize="15sp"
+                android:inputType="textEmailAddress"
+                android:autofillHints="email"
+                android:hint="@string/profileEmail"
+                android:paddingHorizontal="10dp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textViewGroupID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/colorPalettonDark"
+                android:layout_marginTop="10dp"
+                android:text="@string/profileGroupID" />
+
+            <EditText
+                android:id="@+id/editTextGroupID"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_edittext"
+                android:textColor="@color/colorPalettonDark"
+                android:textSize="15sp"
+                android:inputType="textPersonName"
+                android:autofillHints="email"
+                android:hint="@string/profileGroupID"
+                android:paddingHorizontal="10dp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textViewGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/colorPalettonDark"
+                android:layout_marginTop="10dp"
+                android:text="@string/profileGender" />
+
+            <Spinner
+                android:id="@+id/gender_spinner"
+                android:background="@drawable/rounded_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5sp"/>
+
+        </LinearLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/buttonUpdateData"

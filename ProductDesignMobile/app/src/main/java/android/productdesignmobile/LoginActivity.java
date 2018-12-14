@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     public static SessionManager session;
 
     private TextView status;
+    private Button login_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,10 @@ public class LoginActivity extends AppCompatActivity {
         EditText password = findViewById(R.id.loginEditTextPassword);
         status = findViewById(R.id.loginTextViewStatus);
 
-        Button login_button = findViewById(R.id.loginButtonLogin);
+        login_button = findViewById(R.id.loginButtonLogin);
         login_button.setOnClickListener(v -> {
+            login_button.setAlpha(.5f);
+            login_button.setEnabled(false);
             final String login_username = username.getText().toString();
             final String login_password = password.getText().toString();
             LoginUser lu = new LoginUser(this,login_username,login_password);
@@ -96,9 +99,11 @@ public class LoginActivity extends AppCompatActivity {
                     String login = json.getString("login");
                     if ((!login.isEmpty()) && login.equals("Success")){
                         status.setText(R.string.loginStatusRetrievingUserData);
-                        String temp = json.getString("data");
-                        JSONObject result_json = new JSONObject(temp);
-                        updateSession(result_json);
+                        String userData = json.getString("userData");
+                        String dietaryData = json.getString("dietaryData");
+                        JSONObject user_json = new JSONObject(userData);
+                        JSONObject dietary_json = new JSONObject((dietaryData));
+                        updateSession(user_json, dietary_json);
                         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(intent);
                         LoginActivity.this.finish();
@@ -106,13 +111,15 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     status.setText(R.string.loginStatusWrongCredentials);
                     status.setTextColor(Color.parseColor("#FF0000"));
+                    login_button.setAlpha(1f);
+                    login_button.setEnabled(true);
                     e.printStackTrace();
                 }
         }
 
-        private void updateSession(JSONObject jsonObject) throws JSONException {
+        private void updateSession(JSONObject user_json, JSONObject dietary_json) throws JSONException {
             session = new SessionManager(getApplicationContext());
-            session.createLoginSession(jsonObject);
+            session.createLoginSession(user_json, dietary_json);
         }
 
         private String HttpPost(String urlAddress) throws IOException, JSONException {

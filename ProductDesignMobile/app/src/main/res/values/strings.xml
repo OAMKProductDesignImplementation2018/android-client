@@ -34,6 +34,7 @@
     <string name="profileEmail">Email</string>
     <string name="profileGender">Gender</string>
     <string name="profileLanguage">Language</string>
+    <string name="profileGroupID">Group ID</string>
 
     <string name="profileButtonUpdateData">Save changes</string>
     <string name="profileButtonChangeDietary">Change dietary settings</string>
@@ -44,6 +45,8 @@
     <string name="profileDietaryMilkless">Milkless</string>
     <string name="profileDietaryLactoseFree">Lactose Free</string>
     <string name="profileDietaryLowLactose">Low Lactose</string>
+    <string name="profileDietaryGarlic">Includes garlic</string>
+    <string name="profileDietaryAllergen">Includes allergens</string>
     <string name="profileDietarySaveButton">Save dietary settings</string>
 
     <string name="photoTextViewHeader">Photo Options</string>

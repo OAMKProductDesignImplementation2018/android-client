@@ -28,25 +28,31 @@ public class DietarySettingsFragment extends DialogFragment {
         CheckBox lowlactose = view.findViewById(R.id.checkBoxLowLactose);
         CheckBox milkless = view.findViewById(R.id.checkBoxMilkless);
         CheckBox vegan = view.findViewById(R.id.checkBoxVegan);
+        CheckBox garlic = view.findViewById(R.id.checkBoxGarlic);
+        CheckBox allergen = view.findViewById(R.id.checkBoxAllergen);
 
         HashMap<String, Boolean> dietary = session.getDietaryDetails();
 
         gluten.setChecked(dietary.get(SessionManager.KEY_DIETARY_GLUTEN));
         lactosefree.setChecked(dietary.get(SessionManager.KEY_DIETARY_LACTOSEFREE));
-        lowlactose.setChecked(dietary.get(SessionManager.KEY_DIETARY_LACTOSEFREE));
-        milkless.setChecked(dietary.get(SessionManager.KEY_DIETARY_LOWLACTOSE));
+        lowlactose.setChecked(dietary.get(SessionManager.KEY_DIETARY_LOWLACTOSE));
+        milkless.setChecked(dietary.get(SessionManager.KEY_DIETARY_MILKLESS));
         vegan.setChecked(dietary.get(SessionManager.KEY_DIETARY_VEGAN));
+        garlic.setChecked(dietary.get(SessionManager.KEY_DIETARY_GARLIC));
+        allergen.setChecked(dietary.get(SessionManager.KEY_DIETARY_ALLERGEN));
 
         // Update dietary settings to database and sharedprefs
         final Button updateDietary = view.findViewById(R.id.buttonSaveDietary);
         updateDietary.setOnClickListener(v -> {
             // Update dietary settings to session sharedprefs
-            HashMap<String, Boolean> temp = new HashMap<String, Boolean>();
+            HashMap<String, Boolean> temp = new HashMap<>();
             temp.put("gluten", gluten.isChecked());
             temp.put("lactosefree", lactosefree.isChecked());
             temp.put("lowlactose", lowlactose.isChecked());
             temp.put("milkless", milkless.isChecked());
             temp.put("vegan", vegan.isChecked());
+            temp.put("garlic", garlic.isChecked());
+            temp.put("allergen", allergen.isChecked());
             session.setDietaryDetails(temp);
             dismiss();
 
