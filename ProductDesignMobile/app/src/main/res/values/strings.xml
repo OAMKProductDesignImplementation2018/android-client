@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProductDesignMobile</string>
+    <string name="app_name">NoticeMe</string>
 
     <string name="loginTextViewGuide">(use testi2/salasana or t5vahe01 and no password to login)</string>
     <string name="loginButtonLogin">Login</string>

@@ -68,11 +68,23 @@
         android:inputType="textEmailAddress" />
 
     <ImageView
+        android:id="@+id/loginImageViewLogo"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-20dp"
+        android:layout_above="@id/loginTextViewHeaderAppName"
+        android:background="@android:drawable/ic_menu_camera" />
+
+    <TextView
+        android:id="@+id/loginTextViewHeaderAppName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@id/loginEditTextUsername"
         android:layout_marginBottom="50dp"
-        android:background="@android:drawable/ic_menu_camera" />
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:text="@string/app_name"/>
 
 </RelativeLayout>

@@ -51,6 +51,7 @@ public class SessionManager {
         editor.putString(KEY_LAST_NAME, user_json.getString("lastname"));
         editor.putString(KEY_GROUP_ID, user_json.getString("groupid"));
         editor.putString(KEY_GENDER, user_json.getString("gender"));
+        editor.putString(KEY_EMAIL, user_json.getString("email"));
         editor.putString(KEY_IMAGE_URL, user_json.getString("imageurl"));
         //editor.putInt(KEY_RESTAURANT_ID, user_json.getInt("restaurantid"));
         editor.putBoolean(KEY_DIETARY_GLUTEN, dietary_json.getBoolean("G"));
