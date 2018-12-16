@@ -32,6 +32,26 @@
             android:textColor="@color/white"
             android:text="@string/homeTextViewHeader"/>
 
+        <TextView
+            android:id="@+id/homeTextViewGuide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/homeTextViewHeader"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorPalettonDark"
+            android:text="Welcome, start using NoticeMe by filling user information and adding profile picture."/>
+
+        <TextView
+            android:id="@+id/homeTextViewGuide2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_below="@+id/homeTextViewGuide"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/colorPalettonDark"
+            android:text="To find Settings Screen, swipe from left edge to right!"/>
+
     </RelativeLayout>
 
 
