@@ -82,8 +82,7 @@ public class SessionManager {
     }
 
     public int getUserID(){
-        int user_id = pref.getInt(KEY_USER_ID, 0);
-        return user_id;
+        return pref.getInt(KEY_USER_ID, 0);
     }
 
     public JSONObject updateUserData() throws JSONException{

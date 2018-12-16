@@ -18,11 +18,6 @@ import static android.productdesignmobile.LoginActivity.session;
 public class DietarySettingsFragment extends DialogFragment {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dietary_settings, container, false);
 
@@ -62,7 +57,7 @@ public class DietarySettingsFragment extends DialogFragment {
             temp.put("garlic", garlic.isChecked());
             temp.put("allergen", allergen.isChecked());
             session.setDietaryDetails(temp);
-            UpdateUserData uud = null;
+            UpdateUserData uud;
             try {
                 uud = new UpdateUserData(getContext());
                 uud.execute();

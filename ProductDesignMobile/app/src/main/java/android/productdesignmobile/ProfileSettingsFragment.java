@@ -26,13 +26,10 @@ import static android.productdesignmobile.LoginActivity.session;
 
 public class ProfileSettingsFragment extends android.support.v4.app.Fragment {
 
-    private Button buttonDietarySettings;
-    private Button buttonAddPicture;
     private Button buttonUpdateData;
 
     private EditText first_name;
     private EditText last_name;
-    private EditText email;
     private EditText group_id;
 
     @Override
@@ -48,7 +45,7 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment {
         gender_spinner.setAdapter(gender_adapter);
 
         // Open dietary settings dialogfragment
-        buttonDietarySettings = view.findViewById(R.id.buttonDietarySettings);
+        final Button buttonDietarySettings = view.findViewById(R.id.buttonDietarySettings);
         buttonDietarySettings.setOnClickListener(v -> {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             Fragment prev = getFragmentManager().findFragmentByTag("dialog");
@@ -60,7 +57,7 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment {
             dialogFragment.show(ft, "dialog");
         });
         //Open PhotoOptionsFragment
-        buttonAddPicture = view.findViewById(R.id.buttonAddPicture);
+        final Button buttonAddPicture = view.findViewById(R.id.buttonAddPicture);
         buttonAddPicture.setOnClickListener(v -> {
             Fragment fragment = null;
             Class fragmentClass = PhotoOptionsFragment.class;
@@ -108,7 +105,7 @@ public class ProfileSettingsFragment extends android.support.v4.app.Fragment {
         // init
         first_name = view.findViewById(R.id.editTextFirstName);
         last_name = view.findViewById(R.id.editTextLastName);
-        email = view.findViewById(R.id.editTextEmail);
+        EditText email = view.findViewById(R.id.editTextEmail);
         email.setFocusable(false);
         email.setAlpha(.5f);
         group_id = view.findViewById(R.id.editTextGroupID);
