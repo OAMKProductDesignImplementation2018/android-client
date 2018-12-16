@@ -25,7 +25,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -47,6 +49,7 @@ public class PhotoOptionsFragment extends Fragment {
     private ImageView selectedImageThumbnail;
     // Path to the picture
     private String selectedImagePathRealSize;
+    private File selectedImagePathThumbnail;
 
     //private final OkHttpClient client = new OkHttpClient();
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png; boundary");
@@ -114,7 +117,7 @@ public class PhotoOptionsFragment extends Fragment {
                 MultipartBody requestBody = new MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
                         .addPart(Headers.of("Content-Disposition", "form-data; name=\"image\""),
-                                RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImagePathRealSize)))
+                                RequestBody.create(MEDIA_TYPE_PNG, selectedImagePathThumbnail))
                         .build();
                 Request request = new Request.Builder()
                         .addHeader("user_id", user_id)
@@ -176,7 +179,6 @@ public class PhotoOptionsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // todo: fix thumbnail size and orientation change in some pictures
         final int THUMB_SIZE = 256;
         if (resultCode == Activity.RESULT_OK) {
@@ -204,6 +206,7 @@ public class PhotoOptionsFragment extends Fragment {
                     // Create a thumbnail of the picture
                     Bitmap bitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(selectedImagePathRealSize), THUMB_SIZE, THUMB_SIZE);
                     selectedImageThumbnail.setImageBitmap(bitmap);
+                    createTempImage(bitmap);
                 } break;
                 default:
                     break;
@@ -211,8 +214,7 @@ public class PhotoOptionsFragment extends Fragment {
         }
     }
 
-    private void launchCamera()
-    {
+    private void launchCamera() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (getActivity() != null && cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             // Create temporary file from the image
@@ -239,5 +241,19 @@ public class PhotoOptionsFragment extends Fragment {
 
         File storageDir = Objects.requireNonNull(getActivity()).getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(fileName, ".jpg", storageDir);
+    }
+
+    private void createTempImage(Bitmap bitmap){
+        File filesDir = getContext().getFilesDir();
+        selectedImagePathThumbnail = new File(filesDir, "temp_pic" + ".jpg");
+        OutputStream os;
+        try {
+            os = new FileOutputStream(selectedImagePathThumbnail);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+        }
     }
 }
