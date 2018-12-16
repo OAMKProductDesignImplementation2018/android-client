@@ -17,12 +17,18 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.face.Face;
+import com.google.android.gms.vision.face.FaceDetector;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -61,6 +67,9 @@ public class PhotoOptionsFragment extends Fragment {
     private static final int GALLERY_INTENT = 23;
 
     private Button buttonUpload;
+    private TextView status;
+
+    FaceDetector detector;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -70,6 +79,7 @@ public class PhotoOptionsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         // Load views
         selectedImageThumbnail = view.findViewById(R.id.imageViewProfilePicture);
+        status = view.findViewById(R.id.photoTextViewStatus);
 
         // Select picture from gallery
         final Button buttonAddPictureFile = view.findViewById(R.id.buttonAddPictureFile);
@@ -95,12 +105,6 @@ public class PhotoOptionsFragment extends Fragment {
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
             else
                 launchCamera();
-        });
-
-        // Remove current photo
-        final Button buttonRemovePicture = view.findViewById(R.id.buttonRemovePicture);
-        buttonRemovePicture.setOnClickListener(v -> {
-            Log.d("buttonRemovePicture", "pressed");
         });
 
         // Upload chosen picture
@@ -149,6 +153,11 @@ public class PhotoOptionsFragment extends Fragment {
             });
             thread.start();
         });
+
+        detector = new FaceDetector.Builder(getContext())
+                .setTrackingEnabled(false)
+                .setLandmarkType(FaceDetector.ALL_LANDMARKS)
+                .build();
     }
 
     @Override
@@ -180,7 +189,7 @@ public class PhotoOptionsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // todo: fix thumbnail size and orientation change in some pictures
-        final int THUMB_SIZE = 256;
+        final int THUMB_SIZE = 512;
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case GALLERY_INTENT: {
@@ -207,6 +216,27 @@ public class PhotoOptionsFragment extends Fragment {
                     Bitmap bitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(selectedImagePathRealSize), THUMB_SIZE, THUMB_SIZE);
                     selectedImageThumbnail.setImageBitmap(bitmap);
                     createTempImage(bitmap);
+
+                    Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+                    SparseArray<Face> faces = detector.detect(frame);
+
+                    Log.d("facedetect", "Faces detected: " + String.valueOf(faces.size()));
+
+                    if (faces.size() < 1){
+                        status.setText("No faces detected!");
+                        buttonUpload.setEnabled(false);
+                        buttonUpload.setAlpha(.5f);
+                    } else if (faces.size() > 1) {
+                        status.setText("Too many faces detected!");
+                        buttonUpload.setEnabled(false);
+                        buttonUpload.setAlpha(.5f);
+                    } else if (faces.size() == 1) {
+                        status.setText("Face detected!");
+                        buttonUpload.setEnabled(true);
+                        buttonUpload.setAlpha(1f);
+                    }
+
+
                 } break;
                 default:
                     break;
