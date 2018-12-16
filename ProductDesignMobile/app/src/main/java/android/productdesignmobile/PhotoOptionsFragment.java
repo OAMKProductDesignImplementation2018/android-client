@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
@@ -35,7 +36,10 @@ import com.google.android.gms.vision.face.FaceDetector;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -59,7 +63,8 @@ public class PhotoOptionsFragment extends Fragment {
     private String selectedImagePathRealSize;
     private File selectedImagePathThumbnail;
 
-    //private final OkHttpClient client = new OkHttpClient();
+    int user_id;
+
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png; boundary");
 
     private static final int CAMERA_PERMISSION = 20;
@@ -79,8 +84,13 @@ public class PhotoOptionsFragment extends Fragment {
     }
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        user_id = session.getUserID();
         // Load views
+
+        // Init imageView to use existing profilepic if not use default nophoto
         selectedImageThumbnail = view.findViewById(R.id.imageViewProfilePicture);
+        loadImage();
+
         status = view.findViewById(R.id.photoTextViewStatus);
 
         // Select picture from gallery
@@ -118,7 +128,7 @@ public class PhotoOptionsFragment extends Fragment {
             buttonUpload.setAlpha(.5f);
             buttonUpload.setText("Uploading picture...");
             Thread thread = new Thread(() -> {
-                String user_id = Integer.toString(session.getUserID());
+                String user_id_string = Integer.toString(user_id);
                 OkHttpClient client = new OkHttpClient();
                 MultipartBody requestBody = new MultipartBody.Builder()
                         .setType(MultipartBody.FORM)
@@ -126,8 +136,8 @@ public class PhotoOptionsFragment extends Fragment {
                                 RequestBody.create(MEDIA_TYPE_PNG, selectedImagePathThumbnail))
                         .build();
                 Request request = new Request.Builder()
-                        .addHeader("user_id", user_id)
-                        .header("user_id", user_id)
+                        .addHeader("user_id", user_id_string)
+                        .header("user_id", user_id_string)
                         .url("https://facedatabasetest.azurewebsites.net/api/MobileImageHandler")
                         .post(requestBody)
                         .build();
@@ -160,6 +170,25 @@ public class PhotoOptionsFragment extends Fragment {
                 .setTrackingEnabled(false)
                 .setLandmarkType(FaceDetector.ALL_LANDMARKS)
                 .build();
+    }
+
+    private void loadImage(){
+        Thread imagethread = new Thread(() -> {
+            URL url = null;
+            try {
+                url = new URL("https://facedatabasetest.blob.core.windows.net/images/" + user_id + ".jpg");
+                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        selectedImageThumbnail.setImageBitmap(bmp);
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        imagethread.start();
     }
 
     @Override
