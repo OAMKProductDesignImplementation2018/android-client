@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             final String login_password = password.getText().toString();
             LoginUser lu = new LoginUser(this,login_username,login_password);
             lu.execute();
+            closeKeyboard();
         });
 
         TextView signup_button = findViewById(R.id.loginTextViewSignUp);
@@ -64,6 +66,12 @@ public class LoginActivity extends AppCompatActivity {
             DialogFragment dialogFragment = new RegisterFragment();
             dialogFragment.show(getSupportFragmentManager(), "dialog");
         });
+    }
+
+    private void closeKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
     }
 
     private class LoginUser extends AsyncTask<String,String,String>{
