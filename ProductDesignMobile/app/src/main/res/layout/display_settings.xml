@@ -28,4 +28,46 @@
         android:textColor="@color/white"
         android:text="@string/displayTextViewHeader"/>
 
+    <CheckBox
+        android:id="@+id/displayCheckBoxCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/displayTextViewHeader"
+        android:layoutDirection="rtl"
+        android:textColor="@color/colorPalettonDark"
+        android:textSize="15sp"
+        android:text="Display calendar"/>
+
+    <CheckBox
+        android:id="@+id/displayCheckBoxMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/displayCheckBoxCalendar"
+        android:layoutDirection="rtl"
+        android:textColor="@color/colorPalettonDark"
+        android:textSize="15sp"
+        android:text="Display menu"/>
+
+    <CheckBox
+        android:id="@+id/displayCheckBoxNews"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/displayCheckBoxMenu"
+        android:layoutDirection="rtl"
+        android:textColor="@color/colorPalettonDark"
+        android:textSize="15sp"
+        android:text="Display news"/>
+
+    <Button
+        android:id="@+id/displayButtonSaveChanges"
+        android:background="@drawable/rounded_button"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:text="Save Changes" />
+
 </RelativeLayout>
